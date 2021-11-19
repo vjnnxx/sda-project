@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=], initial-scale=1.0">
+    <title>Passageiros - Cadastro</title>
+</head>
+<body>
+    <h1>Cadastro Passageiro</h1>
+
+    <form action="/passageiros/cadastrar" method="post">
+        <label>Nome</label>
+		<input type="text" id="nome" name="nome" value=""/>
+    </br></br>
+
+        <label>Responsável</label>
+		<input type="text" id="responsavel" name="responsavel" value=""/>
+    </br></br>
+
+        <label for="data_nasc">Data de nascimento</label>
+        <input type="date" id="data_nasc" name="data_nasc" min="1910-01-01">
+    </br></br>
+
+        <label for="pais">País</label>
+
+            <select name="pais" id="pais">
+                <% for(var i=0;i< paises.length;i++){ %>
+                    <option value="<%= paises[i].codigo %>"><%= paises[i].nome %></option>
+                <% } %>
+
+            </select>
+    </br></br>
+        
+        <label for="sexo">Sexo</label>
+
+            <select name="sexo" id="sexo">
+            <option value="M">Masculino</option>
+            <option value="f">Feminino</option>
+            <option value="O">Outros</option>
+
+            </select>
+    </br></br>
+
+        <label for="estado_civil">Estado Civil</label>
+
+            <select name="estado_civil" id="estado_civil">
+            <option value="S">Solteiro</option>
+            <option value="C">Casado</option>
+            
+
+            </select>
+    </br></br>
+
+    <input type="submit" />
+    </form>
+</body>
+</html>

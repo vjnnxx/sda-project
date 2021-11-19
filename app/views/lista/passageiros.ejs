@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Passageiros</title>
+</head>
+<body>
+    <h1>Passageiros</h1>
+
+    <form action="/passageiros/busca" method="get">
+        <input type="text" name="busca" id="busca" required>
+        <button type="submit"> Enviar</button>
+    </form>
+
+    <a href="/passageiros/cadastro">
+        <button> Cadastrar</button>
+    </a>
+
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>Nome</td>
+            <td>Sexo</td>
+            <td>Data Nasc</td>
+            <td>Estado Civil</td>
+            <td>Responsável</td>
+            <td>País</td>
+            <td>Editar</td>
+        </tr>
+
+        <% for(var i=0;i< 20;i++){ %>
+            <tr>
+                <td><%= passageiros[i].CD_PSGR %></td>
+                <td><%= passageiros[i].NM_PSGR %></td>
+                <td><%= passageiros[i].IC_SEXO_PSGR %></td>
+                <td><%= passageiros[i].DT_NASC_PSGR %></td>
+                <td><%= passageiros[i].IC_ESTD_CIVIL %></td>
+                <td><%= passageiros[i].CD_PSGR_RESP %></td>
+                <td><%= passageiros[i].CD_PAIS %></td>
+                <td> 
+                    <a href="/passageiros/editar/<%=passageiros[i].CD_PSGR %>">
+                        <button type="button"> Editar</button></td>
+                    </a>
+                    
+            </tr>
+        <% } %>
+    </table>
+    
+</body>
+</html>
