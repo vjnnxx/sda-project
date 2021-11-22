@@ -63,9 +63,11 @@ app.get('/passageiros/cadastro', function (req, res){
 
         for (x in result){
         
-            paises.push({codigo: result[x].cd_pais, nome: result[x].nm_pais});
+            paises.push({codigo: result[x].CD_PAIS, nome: result[x].NM_PAIS});
         }
 
+        console.log(result)
+       
         
         res.render('cadastro/cadastro_passageiro', {paises: paises});
     });
