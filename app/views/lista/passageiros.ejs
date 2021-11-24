@@ -6,6 +6,7 @@
     <title>Passageiros</title>
 </head>
 <body>
+    <a href="/"> Home</a>
     <h1>Passageiros</h1>
 
     <form action="/passageiros/busca" method="get">
@@ -29,7 +30,7 @@
             <td>Editar</td>
         </tr>
 
-        <% for(var i=0;i< 20;i++){ %>
+        <% for(var i=0;i< passageiros.length;i++){ %>
             <tr>
                 <td><%= passageiros[i].CD_PSGR %></td>
                 <td><%= passageiros[i].NM_PSGR %></td>
