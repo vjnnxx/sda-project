@@ -3,50 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Passageiros</title>
 </head>
 <body>
     <a href="/"> Home</a>
     <h1>Passageiros</h1>
 
-    <form action="/passageiros/busca" method="get">
+    <h2>Filtros</h2>
+    <h3>Estado Civil</h3>
+    
+
+<input type="radio" id="solteiro" name="estado" value="S">
+<label for="solteiro">Solteiro(a)</label><br>
+<input type="radio" id="casado" name="estado" value="C">
+<label for="casado">Casado(a)</label><br>
+  
+
+    <h3>Idade</h3>
+
+    <label>Maior que: </label>
+    <input type="number" id="maior_idade" name="idade" value=""/><br>
+    <label>Menor que:</label>
+    <input type="number" id="menor_idade" name="idade" value=""/><br><br>
+
+
+    
         <input type="text" name="busca" id="busca" required>
-        <button type="submit"> Enviar</button>
-    </form>
+        
+        <button type="submit" id="send-busca"> Enviar</button>
+
+        <a href="/passageiros">
+            <button> Limpar </button>
+        </a>
+        <br>
+
 
     <a href="/passageiros/cadastro">
         <button> Cadastrar</button>
     </a>
+    <div id="resultados">
+        <table id="table-passageiros">
+        
+                <tr>
+                    <td>ID</td>
+                    <td>Nome</td>
+                    <td>Sexo</td>
+                    <td>Data Nasc</td>
+                    <td>Estado Civil</td>
+                    <td>Responsável</td>
+                    <td>País</td>
+                    <td>Editar</td>
+                </tr>
 
-    <table>
-        <tr>
-            <td>ID</td>
-            <td>Nome</td>
-            <td>Sexo</td>
-            <td>Data Nasc</td>
-            <td>Estado Civil</td>
-            <td>Responsável</td>
-            <td>País</td>
-            <td>Editar</td>
-        </tr>
 
-        <% for(var i=0;i< passageiros.length;i++){ %>
-            <tr>
-                <td><%= passageiros[i].CD_PSGR %></td>
-                <td><%= passageiros[i].NM_PSGR %></td>
-                <td><%= passageiros[i].IC_SEXO_PSGR %></td>
-                <td><%= passageiros[i].DT_NASC_PSGR %></td>
-                <td><%= passageiros[i].IC_ESTD_CIVIL %></td>
-                <td><%= passageiros[i].CD_PSGR_RESP %></td>
-                <td><%= passageiros[i].CD_PAIS %></td>
-                <td> 
-                    <a href="/passageiros/editar/<%=passageiros[i].CD_PSGR %>">
-                        <button type="button"> Editar</button></td>
-                    </a>
-                    
-            </tr>
-        <% } %>
-    </table>
-    
+            
+                <% for(var i=0;i< passageiros.length;i++){ %>
+                    <tr class="resultado-passageiros">
+                        <td><%= passageiros[i].CD_PSGR %></td>
+                        <td><%= passageiros[i].NM_PSGR %></td>
+                        <td><%= passageiros[i].IC_SEXO_PSGR %></td>
+                        <td><%= passageiros[i].DT_NASC_PSGR %></td>
+                        <td><%= passageiros[i].IC_ESTD_CIVIL %></td>
+                        <td><%= passageiros[i].CD_PSGR_RESP %></td>
+                        <td><%= passageiros[i].CD_PAIS %></td>
+                        <td> 
+                            <a href="/passageiros/editar/<%=passageiros[i].CD_PSGR %>">
+                                <button type="button"> Editar</button></td>
+                            </a>
+                            
+                    </tr>
+                <% } %>
+        
+        
+        
+        </table>
+    </div>
 </body>
+
+<script>
+    $(document).ready(function(){
+
+        $('#send-busca').click(function(){
+           
+            const busca = $('#busca').val();
+
+            if(busca){
+                $.ajax({
+                    url: '/passageiros/busca' ,
+                    method: 'GET',
+                    data: {busca: busca},
+                    success: response =>{
+                        console.log(response);
+
+                        const passageiros = response;
+                        
+                        $('tr').remove(".resultado-passageiros");
+
+                        const table = document.getElementById('table-passageiros');
+
+                        passageiros.forEach(element => {
+
+                            let tr = document.createElement('tr');
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.CD_PSGR;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.NM_PSGR;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.IC_SEXO_PSGR;
+
+                            var td4 = document.createElement('td');
+                            td4.innerHTML = element.DT_NASC_PSGR ;
+
+                            var td5 = document.createElement('td');
+                            td5.innerHTML = element.IC_ESTD_CIVIL ;
+
+                            var td6 = document.createElement('td');
+                            element.IC_CD_PSGR_RESP == undefined ? td6.innerHTML = '' : td6.innerHTML = element.IC_CD_PSGR_RESP ;
+
+                            var td7 = document.createElement('td');
+                            td7.innerHTML = element.CD_PAIS ;
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/passageiros/editar/' + element.CD_PSGR;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+                            tr.appendChild(td5);
+                            tr.appendChild(td6);
+                            tr.appendChild(td7);
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                        
+                        
+                    },
+                });
+            }
+        });
+
+      
+        
+    });
+</script>
+
 </html>

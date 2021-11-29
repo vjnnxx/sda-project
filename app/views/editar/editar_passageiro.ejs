@@ -100,6 +100,11 @@
                     method: 'POST',
                     success: response =>{
                         console.log(response);
+
+                        set(function(){ 
+                            alert(response);
+                            location.href = '/passageiros';
+                        }, 1000);
                     }
                 })
             }

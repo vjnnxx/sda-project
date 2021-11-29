@@ -10,5 +10,5 @@ var con = function(){
 }
 
 module.exports = function(){
- con;
+ return con;
 };

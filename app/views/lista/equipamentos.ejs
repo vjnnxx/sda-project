@@ -9,6 +9,42 @@
 <body>
     <h1>Equipamentos</h1>
 
+    <h2>Filtros</h2>
+
+    <label for="tipo">Tipo:</label>
+
+        <select name="tipo" id="tipo">
+                <% tipos = [] %>
+                <% for(var i=0;i< equipamentos.length;i++){ %>
+                    
+                        <option value="<%= equipamentos[i].tipo %>"><%= equipamentos[i].tipo %></option>
+                        
+                    
+                <% } %>
+
+            </select>
+    </br></br>
+
+    <label for="nome">Nome:</label>
+
+            <select name="nome" id="nome">
+                <% for(var i=0;i< equipamentos.length;i++){ %>
+                    <option value="<%= equipamentos[i].nome %>"><%= equipamentos[i].nome %></option>
+                <% } %>
+
+            </select>
+    </br></br>
+
+    <label for="quant">Quant. passageiro:</label>
+
+            <select name="quant" id="quant">
+                <% for(var i=0;i< equipamentos.length;i++){ %>
+                    <option value="<%= equipamentos[i].quantidade %>"><%= equipamentos[i].quantidade %></option>
+                <% } %>
+
+            </select>
+    </br></br>
+
     <form action="">
         <input type="text" name="busca" id="busca">
         <button type="submit"> Enviar</button>
