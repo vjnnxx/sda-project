@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Voos</title>
 </head>
 <body>
@@ -13,17 +13,150 @@
     
     
     <label>Local de origem </label>
-    <input type="text" id="local_orig" name="local_orig" value=""/><br><br>
+    <input type="text" id="local_orig" name="local_orig" value=""/> 
+    <a href="">
+        <button>Filtrar</button>
+    </a>
+    <br><br>
 
 
-    <form action="">
-        <input type="text" name="busca" id="busca">
-        <button type="submit"> Enviar</button>
-    </form>
+   
+    <input type="text" name="busca" id="busca" required>
+    <a href="/passageiros">
+        <button> Limpar </button>
+    </a> <br>
+
+    
+    <button type="submit" id="send-busca"> Enviar</button>
+    
     
     <a href="/voos/cadastro">
         <button> Cadastrar</button>
     </a>
 
+    <div id="resultados">
+        <table id="table-voos">
+        
+                <tr>
+                    <td>ID</td>
+                    <td>Data de saída</td>
+                    <td>Numero Rota</td>
+                    <td>Código aeronave</td>
+                </tr>
+
+
+            
+                <% for(var i=0;i< voos.length;i++){ %>
+                    <tr class="resultado-voos">
+                        <td><%= voos[i].NR_VOO %></td>
+                        <td><%= voos[i].DT_SAIDA_VOO %></td>
+                        <td><%= voos[i].NR_ROTA_VOO %></td>
+                        <td><%= voos[i].CD_ARNV %></td>
+                        
+                        <td> 
+                            <a href="/voos/editar/<%=voos[i].NR_VOO %>">
+                                <button type="button"> Editar</button></td>
+                            </a>
+                            
+                    </tr>
+                <% } %>
+        
+        
+        
+        </table>
+    </div>
+
 </body>
+<script>
+    $(document).ready(function(){
+
+        
+        
+        $('#send-busca').click(function(){
+           
+            const busca = $('#busca').val();
+
+            if(busca){
+                $.ajax({
+                    url: '/voos/busca' ,
+                    method: 'GET',
+                    data: {busca: busca},
+                    success: response =>{
+                        //console.log(response);
+
+                        const voos = response;
+                        Vasco = voos;     
+                        $('tr').remove(".resultado-voos");
+
+                        const table = document.getElementById('table-voos');
+
+                        voos.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-voos";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.NR_VOO;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.DT_SAIDA_VOO;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.NR_ROTA_VOO;
+
+                            var td4 = document.createElement('td');
+                            td4.innerHTML = element.CD_ARNV ;
+
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/voos/editar/' + element.NR_VOO;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                        
+                        
+                    },
+                });
+            }
+        });
+
+        
+
+        $('#solteiro').click(function(){
+            
+            $.ajax({
+                url: '/passageiros/filtro'
+            })
+        });
+
+            
+
+            
+
+        
+
+      
+        
+    });
+</script>
+
 </html>

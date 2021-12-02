@@ -14,9 +14,9 @@
     <h3>Estado Civil</h3>
     
 
-<input type="radio" id="solteiro" name="estado" value="S">
+<input type="checkbox" id="solteiro" name="estado" value="S">
 <label for="solteiro">Solteiro(a)</label><br>
-<input type="radio" id="casado" name="estado" value="C">
+<input type="checkbox" id="casado" name="estado" value="C">
 <label for="casado">Casado(a)</label><br>
   
 
@@ -84,6 +84,8 @@
 <script>
     $(document).ready(function(){
 
+        
+        
         $('#send-busca').click(function(){
            
             const busca = $('#busca').val();
@@ -94,10 +96,10 @@
                     method: 'GET',
                     data: {busca: busca},
                     success: response =>{
-                        console.log(response);
+                        //console.log(response);
 
                         const passageiros = response;
-                        
+                        Vasco = passageiros;     
                         $('tr').remove(".resultado-passageiros");
 
                         const table = document.getElementById('table-passageiros');
@@ -105,6 +107,7 @@
                         passageiros.forEach(element => {
 
                             let tr = document.createElement('tr');
+                            tr.className = "resultado-passageiros";
 
                             var td1 = document.createElement('td');
                             td1.innerHTML  = element.CD_PSGR;
@@ -159,6 +162,21 @@
                 });
             }
         });
+
+        
+
+        $('#solteiro').click(function(){
+            
+            $.ajax({
+                url: '/passageiros/filtro'
+            })
+        });
+
+            
+
+            
+
+        
 
       
         

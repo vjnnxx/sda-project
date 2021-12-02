@@ -11,7 +11,21 @@ module.exports=function(app){
 
     app.get('/companhias', function (req, res){
 
-        res.render('lista/companhias');
+        var paises = [];
+        let sql = 'SELECT * FROM itr_pais;'
+        con.query(sql, (err,result)=>{
+
+            if (err) throw err;
+
+            for (x in result){
+            
+                paises.push({nome: result[x].NM_PAIS});
+            }
+            res.render('lista/companhias',{paises:paises});
+        });
+
+
+        
     
     });
     

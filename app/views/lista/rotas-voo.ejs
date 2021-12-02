@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Rotas de voo</title>
 </head>
 <body>
@@ -16,14 +16,128 @@
 <input type="radio" id="sem_reservas" name="reservas" value="">
 <label for="sem_reservas">Sem reservas</label><br><br><br>
 
-    <form action="">
-        <input type="text" name="busca" id="busca">
-        <button type="submit"> Enviar</button>
-    </form>
+<input type="text" name="busca" id="busca" required>
+        
+<button type="submit" id="send-busca"> Enviar</button>
     
     <a href="/rotas/cadastro">
         <button> Cadastrar</button>
     </a>
+
+    <div id="resultados">
+        <table id="table-rotas">
+        
+                <tr>
+                    <td>NR_ROTA_VOO</td>
+                    <td>CD_ARPT_ORIG</td>
+                    <td>CD_ARPT_DEST</td>
+                    <td>VR_PASG</td>
+                    
+                    <td>Editar</td>
+                </tr>
+
+
+            
+                <% for(var i=0;i< rotas.length;i++){ %>
+                    <tr class="resultado-rotas">
+                        <td><%= rotas[i].NR_ROTA_VOO %></td>
+                        <td><%= rotas[i].CD_ARPT_ORIG %></td>
+                        <td><%= rotas[i].CD_ARPT_DEST %></td>
+                        <td><%= rotas[i].VR_PASG %></td>
+                        
+                        <td> 
+                            <a href="/rotas/editar/<%=rotas[i].NR_ROTA_VOO %>">
+                                <button type="button"> Editar</button></td>
+                            </a>
+                            
+                    </tr>
+                <% } %>
+        
+        
+        
+        </table>
+    </div>
     
 </body>
+
+<script>
+    $(document).ready(function(){
+
+        
+        
+        $('#send-busca').click(function(){
+           
+            const busca = $('#busca').val();
+
+            if(busca){
+                $.ajax({
+                    url: '/rotas/busca' ,
+                    method: 'GET',
+                    data: {busca: busca},
+                    success: response =>{
+                        //console.log(response);
+
+                        const rotas = response;
+                      
+                        $('tr').remove(".resultado-rotas");
+
+                        const table = document.getElementById('table-rotas');
+
+                        rotas.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-rotas";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.NR_ROTA_VOO;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.CD_ARPT_ORIG;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.CD_ARPT_DEST;
+
+                            var td4 = document.createElement('td');
+                            element.VR_PASG == undefined ? td4.innerHTML = '' : td4.innerHTML = element.VR_PASG ;
+
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/rotas/editar/' + element.NR_VOO;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                        
+                        
+                    },
+                });
+            }
+        });
+
+ 
+        
+
+      
+        
+    });
+</script>
+
 </html>

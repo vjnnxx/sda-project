@@ -11,7 +11,18 @@ module.exports=function(app){
     //Aeronaves
     app.get('/aeronaves', function (req, res){
 
-        res.render('lista/aeronaves');
+        var companhias = [];
+        let sql = 'SELECT * FROM itr_cmpn_aerea;'
+        con.query(sql, (err,result)=>{
+
+            if (err) throw err;
+
+            for (x in result){
+            
+                companhias.push({nome: result[x].NM_CMPN_AEREA});
+            }
+            res.render('lista/aeronaves',{companhias:companhias});
+        });
 
     });
 

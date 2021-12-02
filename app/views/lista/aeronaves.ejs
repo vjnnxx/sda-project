@@ -10,10 +10,20 @@
     <h1>Aeronaves</h1>
 
     <h2>Filtros</h2>
-    
-    
-    <label>Local de origem </label>
-    <input type="text" id="local_orig" name="local_orig" value=""/><br><br>
+    <h3>Companhias aéreas</h3>
+    <label for="nome">Nome:</label>
+
+        <select name="nome" id="nome">
+                <option value="nenhum">Nenhum</option>
+                <% for(var i=0;i< companhias.length;i++){ %>
+                    
+                        <option value="<%= companhias[i].nome %>"><%= companhias[i].nome %></option>
+                        
+                    
+                <% } %>
+
+            </select>
+    </br></br>
 
     <form action="" method="get">
         <input type="text" name="busca" id="busca">

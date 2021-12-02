@@ -11,9 +11,19 @@ module.exports=function(app){
 
     //Países
     app.get('/paises', function (req, res){
+        let sql = 'SELECT * FROM itr_pais;';
+        
+        let resultados = [];
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
 
-        res.render('lista/paises');
-
+            for (x in result){
+                resultados.push(result[x]);
+            }
+            
+            res.render('lista/paises', {paises: resultados});
+       
+        });
     });
 
     app.get('/paises/cadastro', function (req, res){
@@ -26,6 +36,30 @@ module.exports=function(app){
 
         res.render('editar/editar_pais');
 
+    });
+
+    app.get('/paises/busca', function(req,res){
+
+        let busca = req.query.busca;
+
+        //console.log(req.query)
+        
+        sql = `SELECT * FROM itr_pais WHERE CD_PAIS = '` + busca + `' ;` ;
+
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            
+            for (x in result){
+                resultados.push(result[x]);
+            }
+                //res.render('lista/passageiros', {passageiros: resultados});
+            
+                res.send(resultados);
+
+            });
     });
 
 }

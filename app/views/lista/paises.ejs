@@ -3,20 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Países</title>
 </head>
 <body>
     <h1>Países</h1>
 
-    <form action="">
         <input type="text" name="busca" id="busca">
-        <button type="submit"> Enviar</button>
-    </form>
+
+        <button type="submit" id="send-busca"> Enviar</button>
+
+        <a href="/paises">
+            <button>Limpar</button>
+        </a> <br>
+
+        <div id="resultados">
+            <table id="table-paises">
+            
+                    <tr>
+                        <td>Sigla do país</td>
+                        <td>Nome país</td>
+                        <td>Quantidade de população</td>
+                        
+                    </tr>
+    
+    
+                
+                    <% for(var i=0;i< paises.length;i++){ %>
+                        <tr class="resultado-paises">
+                            <td><%= paises[i].CD_PAIS %></td>
+                            <td><%= paises[i].NM_PAIS %></td>
+                            <td> <%= paises[i].QT_PPLC_PAIS %></td>
+                           
+                            
+                            <td> 
+                                <a href="/paises/editar/<%=paises[i].CD_PAIS %>">
+                                    <button type="button"> Editar</button></td>
+                                </a>
+                                
+                        </tr>
+                    <% } %>
+            
+            
+            
+            </table>
+        </div>
+        
+   
     
     <a href="/paises/cadastro">
         <button> Cadastrar</button>
     </a>
     
 </body>
+<script>
+    $('#send-busca').click(function(){
+           
+           const busca = $('#busca').val();
+
+           if(busca){
+               $.ajax({
+                   url: '/paises/busca' ,
+                   method: 'GET',
+                   data: {busca: busca},
+                   success: response =>{
+                       //console.log(response);
+
+                       const paises = response;  
+
+                        
+                       $('tr').remove(".resultado-paises");
+
+                       const table = document.getElementById('table-paises');
+
+                       paises.forEach(element => {
+
+                           let tr = document.createElement('tr');
+                           tr.className = "resultado-paises";
+
+                           var td1 = document.createElement('td');
+                           td1.innerHTML  = element.CD_PAIS;
+
+                           var td2 = document.createElement('td');
+                           td2.innerHTML = element.NM_PAIS;
+
+                           var td3 = document.createElement('td');
+                           td3.innerHTML = element.QT_PPLC_PAIS;
+
+
+                           var td4 = document.createElement('td');
+                           
+                           var a = document.createElement('a');
+                           a.href = '/paises/editar/' + element.CD_PAIS;
+
+                           var button = document.createElement('button');
+                           button.innerHTML = 'Editar';
+
+                           a.appendChild(button);
+
+                           td4.appendChild(a);
+
+
+                           tr.appendChild(td1);
+                           tr.appendChild(td2);
+                           tr.appendChild(td3);
+                           tr.appendChild(td4);
+
+                           
+
+                           table.appendChild(tr);
+
+                       });
+                       
+                       
+                       
+                   },
+               });
+           }
+       });
+</script>
 </html>

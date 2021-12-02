@@ -13,7 +13,18 @@ module.exports=function(app){
 
     app.get('/rotas', function (req, res){
 
-        res.render('lista/rotas-voo');
+        let sql = 'SELECT * FROM itr_rota_voo;';
+        
+        let resultados = [];
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            for (x in result){
+                resultados.push(result[x]);
+            }
+            
+            res.render('lista/rotas-voo', {rotas: resultados});
+        })
 
     });
 
@@ -26,6 +37,31 @@ module.exports=function(app){
     app.get('/rotas/editar', function (req, res){
 
         res.render('editar/editar_rota_voo');
+
+    });
+
+    app.get('/rotas/busca', function (req, res){
+
+        let busca = req.query.busca;
+
+        //console.log(req.query)
+        
+        sql = `SELECT * FROM itr_rota_voo WHERE NR_ROTA_VOO = ` + busca + ` ;` ;
+
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            //res.render('lista/passageiros', {passageiros: resultados});
+           
+            res.send(resultados);
+
+        });
 
     });
 

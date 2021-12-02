@@ -14,7 +14,7 @@
     <label for="tipo">Tipo:</label>
 
         <select name="tipo" id="tipo">
-                <% tipos = [] %>
+                <option value="nenhum">Nenhum</option>
                 <% for(var i=0;i< equipamentos.length;i++){ %>
                     
                         <option value="<%= equipamentos[i].tipo %>"><%= equipamentos[i].tipo %></option>
@@ -26,8 +26,9 @@
     </br></br>
 
     <label for="nome">Nome:</label>
-
+            
             <select name="nome" id="nome">
+                <option value="nenhum">Nenhum</option>
                 <% for(var i=0;i< equipamentos.length;i++){ %>
                     <option value="<%= equipamentos[i].nome %>"><%= equipamentos[i].nome %></option>
                 <% } %>
@@ -36,8 +37,9 @@
     </br></br>
 
     <label for="quant">Quant. passageiro:</label>
-
+            
             <select name="quant" id="quant">
+                <option value="nenhum">Nenhum</option>
                 <% for(var i=0;i< equipamentos.length;i++){ %>
                     <option value="<%= equipamentos[i].quantidade %>"><%= equipamentos[i].quantidade %></option>
                 <% } %>

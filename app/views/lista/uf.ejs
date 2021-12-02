@@ -3,19 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Unidades Federais</title>
 </head>
 <body>
     <h1>Unidades Federais</h1>
 
-    <form action="">
-        <input type="text" name="busca" id="busca">
-        <button type="submit"> Enviar</button>
-    </form>
+    <input type="text" name="busca" id="busca" required>
+    
+    <button type="submit" id="send-busca"> Enviar</button>
+
+    <a href="/uf">
+        <button> Limpar </button>
+    </a> <br>
+   
     
     <a href="/uf/cadastro">
         <button> Cadastrar</button>
     </a>
+
+    <div id="resultados">
+        <table id="table-unidades">
+        
+                <tr>
+                    <td>Sigla UF</td>
+                    <td>Nome UF</td>
+                    
+                </tr>
+
+
+            
+                <% for(var i=0;i< unidades.length;i++){ %>
+                    <tr class="resultado-unidades">
+                        <td><%= unidades[i].SG_UF %></td>
+                        <td><%= unidades[i].NM_UF %></td>
+                       
+                        
+                        <td> 
+                            <a href="/uf/editar/<%=unidades[i].SG_UF %>">
+                                <button type="button"> Editar</button></td>
+                            </a>
+                            
+                    </tr>
+                <% } %>
+        
+        
+        
+        </table>
+    </div>
 </body>
+
+<script>
+    $('#send-busca').click(function(){
+           
+           const busca = $('#busca').val();
+
+           if(busca){
+               $.ajax({
+                   url: '/uf/busca' ,
+                   method: 'GET',
+                   data: {busca: busca},
+                   success: response =>{
+                       //console.log(response);
+
+                       const unidades = response;  
+                        
+                       $('tr').remove(".resultado-unidades");
+
+                       const table = document.getElementById('table-unidades');
+
+                       unidades.forEach(element => {
+
+                           let tr = document.createElement('tr');
+                           tr.className = "resultado-unidades";
+
+                           var td1 = document.createElement('td');
+                           td1.innerHTML  = element.SG_UF;
+
+                           var td2 = document.createElement('td');
+                           td2.innerHTML = element.NM_UF;
+
+                           var td3 = document.createElement('td');
+                           
+                           var a = document.createElement('a');
+                           a.href = '/uf/editar/' + element.SG_UF;
+
+                           var button = document.createElement('button');
+                           button.innerHTML = 'Editar';
+
+                           a.appendChild(button);
+
+                           td3.appendChild(a);
+
+
+                           tr.appendChild(td1);
+                           tr.appendChild(td2);
+                           tr.appendChild(td3);
+                           
+
+                           table.appendChild(tr);
+
+                       });
+                       
+                       
+                       
+                   },
+               });
+           }
+       });
+</script>
 </html>
