@@ -22,12 +22,15 @@
 
    
     <input type="text" name="busca" id="busca" required>
-    <a href="/passageiros">
+
+    <button type="submit" id="send-busca"> Enviar</button>
+
+    <a href="/voos">
         <button> Limpar </button>
     </a> <br>
 
     
-    <button type="submit" id="send-busca"> Enviar</button>
+    
     
     
     <a href="/voos/cadastro">
@@ -41,7 +44,8 @@
                     <td>ID</td>
                     <td>Data de saída</td>
                     <td>Numero Rota</td>
-                    <td>Código aeronave</td>
+                    <td>CD_ARNV</td>
+                    
                 </tr>
 
 
@@ -52,6 +56,7 @@
                         <td><%= voos[i].DT_SAIDA_VOO %></td>
                         <td><%= voos[i].NR_ROTA_VOO %></td>
                         <td><%= voos[i].CD_ARNV %></td>
+                        
                         
                         <td> 
                             <a href="/voos/editar/<%=voos[i].NR_VOO %>">
@@ -85,7 +90,7 @@
                         //console.log(response);
 
                         const voos = response;
-                        Vasco = voos;     
+                             
                         $('tr').remove(".resultado-voos");
 
                         const table = document.getElementById('table-voos');
@@ -139,17 +144,7 @@
             }
         });
 
-        
-
-        $('#solteiro').click(function(){
-            
-            $.ajax({
-                url: '/passageiros/filtro'
-            })
-        });
-
-            
-
+    
             
 
         

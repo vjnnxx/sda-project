@@ -44,7 +44,7 @@ module.exports=function(app){
 
         //console.log(req.query)
         
-        sql = `SELECT * FROM itr_pais WHERE CD_PAIS = '` + busca + `' ;` ;
+        sql = `SELECT * FROM itr_pais WHERE NM_PAIS LIKE '%` + busca + `%' ;` ;
 
         var resultados = [];
 

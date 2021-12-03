@@ -57,7 +57,7 @@ module.exports=function(app){
 
         //console.log(req.query)
         
-        sql = `SELECT * FROM itr_psgr WHERE NM_PSGR LIKE '%` + busca + `%' ;` ;
+        sql = `SELECT * FROM itr_resv WHERE CD_PSGR =` + busca + ` ;` ;
 
         var resultados = [];
 

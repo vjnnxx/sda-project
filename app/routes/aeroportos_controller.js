@@ -11,7 +11,19 @@ module.exports=function(app){
 
     app.get('/aeroportos', function (req, res){
 
-        res.render('lista/aeroportos');
+        let sql = 'SELECT * FROM itr_arpt;';
+        
+        let resultados = [];
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            for (x in result){
+                resultados.push(result[x]);
+            }
+            
+            res.render('lista/aeroportos', {aeroportos:resultados});
+        })
+        
     
     });
     
@@ -25,6 +37,31 @@ module.exports=function(app){
     
         res.render('editar/editar_aeroporto');
     
+    });
+
+    app.get('/aeroportos/busca', function (req, res){
+
+        let busca = req.query.busca;
+
+        //console.log(req.query)
+        
+        sql = `SELECT * FROM itr_arpt WHERE CD_ARPT LIKE '%` + busca + `%' ;` ;
+
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            //res.render('lista/passageiros', {passageiros: resultados});
+           
+            res.send(resultados);
+
+        });
+
     });
 
 }

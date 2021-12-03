@@ -11,19 +11,18 @@ module.exports=function(app){
     //Equipamentos
     app.get('/equipamentos', function (req, res){
 
-        var equipamentos = [];
-        let sql = 'SELECT * FROM itr_eqpt;'
-        con.query(sql, (err,result)=>{
-
+        let sql = 'SELECT * FROM itr_eqpt;';
+        
+        let resultados = [];
+        con.query(sql, (err, result)=>{
             if (err) throw err;
 
             for (x in result){
-            
-                equipamentos.push({tipo: result[x].DC_TIPO_EQPT, nome: result[x].NM_EQPT,quantidade: result[x].QT_PSGR});
+                resultados.push(result[x]);
             }
-            res.render('lista/equipamentos',{equipamentos:equipamentos});
-        });
-
+            
+            res.render('lista/equipamentos', {equipamentos: resultados});
+        })
         
         
 
@@ -38,6 +37,31 @@ module.exports=function(app){
     app.get('/equipamentos/editar', function (req, res){
 
         res.render('editar/editar_equipamento');
+
+    });
+
+    app.get('/equipamentos/busca', function (req, res){
+
+        let busca = req.query.busca;
+
+        //console.log(req.query)
+        
+        sql = `SELECT * FROM itr_eqpt WHERE CD_EQPT LIKE '%` + busca + `%' ;` ;
+
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            //res.render('lista/passageiros', {passageiros: resultados});
+           
+            res.send(resultados);
+
+        });
 
     });
 

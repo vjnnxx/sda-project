@@ -11,18 +11,18 @@ module.exports=function(app){
     //Aeronaves
     app.get('/aeronaves', function (req, res){
 
-        var companhias = [];
-        let sql = 'SELECT * FROM itr_cmpn_aerea;'
-        con.query(sql, (err,result)=>{
-
+        let sql = 'SELECT * FROM itr_arnv;';
+        
+        let resultados = [];
+        con.query(sql, (err, result)=>{
             if (err) throw err;
 
             for (x in result){
-            
-                companhias.push({nome: result[x].NM_CMPN_AEREA});
+                resultados.push(result[x]);
             }
-            res.render('lista/aeronaves',{companhias:companhias});
-        });
+            
+            res.render('lista/aeronaves', {aeronaves: resultados});
+        })
 
     });
 
@@ -38,22 +38,29 @@ module.exports=function(app){
 
     });
 
-    //Aeroportos
-    app.get('/aeroportos', function (req, res){
 
-        res.render('lista/aeroportos');
+    app.get('/aeronaves/busca', function (req, res){
 
-    });
+        let busca = req.query.busca;
 
-    app.get('/aeroportos/cadastro', function (req, res){
+        //console.log(req.query)
+        
+        sql = `SELECT * FROM itr_arnv WHERE CD_ARNV LIKE '%` + busca + `%' ;` ;
 
-        res.render('cadastro/cadastro_aeroporto');
+        var resultados = [];
 
-    });
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            //res.render('lista/passageiros', {passageiros: resultados});
+           
+            res.send(resultados);
 
-    app.get('/aeroportos/editar', function (req, res){
-
-        res.render('editar/editar_aeroporto');
+        });
 
     });
 };

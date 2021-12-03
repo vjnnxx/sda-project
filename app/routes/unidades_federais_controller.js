@@ -46,7 +46,7 @@ module.exports=function(app){
 
         //console.log(req.query)
         
-        sql = `SELECT * FROM itr_uf WHERE SG_UF = '` + busca + `' ;` ;
+        sql = `SELECT * FROM itr_uf WHERE NM_UF LIKE '%` + busca + `%' ;` ;
 
         var resultados = [];
 

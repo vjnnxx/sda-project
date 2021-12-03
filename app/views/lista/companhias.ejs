@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Companhias aéreas</title>
 </head>
 <body>
@@ -25,14 +25,128 @@
             </select>
     </br></br>
 
-    <form action="">
-        <input type="text" name="busca" id="busca">
-        <button type="submit"> Enviar</button>
-    </form>
+    <input type="text" name="busca" id="busca" required>
+
+    <button type="submit" id="send-busca"> Enviar</button>
+
+    <a href="/companhias">
+        <button> Limpar </button>
+    </a> <br>
 
     <a href="/companhias/cadastro">
         <button> Cadastrar</button>
     </a>
     
+    <div id="resultados">
+        <table id="table-companhias">
+        
+                <tr>
+                    <td>CD_CMPN_AEREA</td>
+                    <td>NM_CMPN_AEREA</td>
+                    <td>CD_PAIS</td>
+                    
+                </tr>
+
+
+            
+                <% for(var i=0;i< companhias.length;i++){ %>
+                    <tr class="resultado-companhias">
+                        <td><%= companhias[i].CD_CMPN_AEREA %></td>
+                        <td><%= companhias[i].NM_CMPN_AEREA %></td>
+                        <td><%= companhias[i].CD_PAIS %></td>
+                        
+                        
+                        <td> 
+                            <a href="/voos/editar/<%=companhias[i].CD_CMPN_AEREA %>">
+                                <button type="button"> Editar</button></td>
+                            </a>
+                            
+                    </tr>
+                <% } %>
+        
+        
+        
+        </table>
+    </div>
+
 </body>
+<script>
+    $(document).ready(function(){
+
+        
+        
+        $('#send-busca').click(function(){
+           
+            const busca = $('#busca').val();
+
+            if(busca){
+                $.ajax({
+                    url: '/companhias/busca' ,
+                    method: 'GET',
+                    data: {busca: busca},
+                    success: response =>{
+                        //console.log(response);
+
+                        const companhias = response;
+                             
+                        $('tr').remove(".resultado-companhias");
+
+                        const table = document.getElementById('table-companhias');
+
+                        companhias.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-companhias";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.CD_CMPN_AEREA;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.NM_CMPN_AEREA;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.CD_PAIS;
+
+                        
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/companhias/editar/' + element.CD_CMPN_AEREA;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+
+
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                        
+                        
+                    },
+                });
+            }
+        });
+
+    
+            
+
+        
+
+      
+        
+    });
+</script>
 </html>

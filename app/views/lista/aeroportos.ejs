@@ -3,20 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Aeroportos</title>
 </head>
 <body>
     <h1>Aeroportos</h1>
 
-    <form action="">
-        <input type="text" name="busca" id="busca">
-        <button type="submit"> Enviar</button>
-    </form>
+    <input type="text" name="busca" id="busca" required>
+
+    <button type="submit" id="send-busca"> Enviar</button>
+
+    <a href="/aeroportos">
+        <button> Limpar </button>
+    </a> <br>
 
     <a href="/aeroportos/cadastro">
         <button> Cadastrar</button>
     </a>
+
+    <div id="resultados">
+        <table id="table-aeroportos">
+        
+                <tr>
+                    <td>CD_ARPT</td>
+                    <td>CD_PAIS</td>
+                    <td>SG_UF</td>
+                    <td>NM_CIDADE</td>
+                    
+                </tr>
+
+
+            
+                <% for(var i=0;i< aeroportos.length;i++){ %>
+                    <tr class="resultado-aeroportos">
+                        <td><%= aeroportos[i].CD_ARPT %></td>
+                        <td><%= aeroportos[i].CD_PAIS %></td>
+                        <td><%= aeroportos[i].SG_UF %></td>
+                        <td><%= aeroportos[i].NM_CIDADE %></td>
+                        
+                        
+                        <td> 
+                            <a href="/aeroportos/editar/<%=aeroportos[i].CD_ARPT %>">
+                                <button type="button"> Editar</button></td>
+                            </a>
+                            
+                    </tr>
+                <% } %>
+        
+        
+        
+        </table>
+    </div>
     
 </body>
+<script>
+    $(document).ready(function(){
+
+        
+        
+        $('#send-busca').click(function(){
+           
+            const busca = $('#busca').val();
+
+            if(busca){
+                $.ajax({
+                    url: '/aeroportos/busca' ,
+                    method: 'GET',
+                    data: {busca: busca},
+                    success: response =>{
+                        //console.log(response);
+
+                        const aeroportos = response;
+                             
+                        $('tr').remove(".resultado-aeroportos");
+
+                        const table = document.getElementById('table-aeroportos');
+
+                        aeroportos.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-aeroportos";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.CD_ARPT;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.CD_PAIS;
+
+                            var td3 = document.createElement('td');
+                            element.SG_UF == undefined ? td3.innerHTML = '' : td3.innerHTML = element.SG_UF ;
+
+                            var td4 = document.createElement('td');
+                            td4.innerHTML = element.NM_CIDADE ;
+
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/aeroportos/editar/' + element.CD_ARPT;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                        
+                        
+                    },
+                });
+            }
+        });
+
+    
+            
+
+        
+
+      
+        
+    });
+</script>
 </html>
