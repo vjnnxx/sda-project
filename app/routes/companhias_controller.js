@@ -26,15 +26,15 @@ module.exports=function(app){
             }
             
             
-        con.query(sql2, (err, result)=>{
-            if (err) throw err;
+            con.query(sql2, (err, result)=>{
+                if (err) throw err;
 
-            for (x in result){
-                companhias.push(result[x]);
-            }
-        
-            res.render('lista/companhias',{paises:paises, companhias:companhias});
-        })
+                for (x in result){
+                    companhias.push(result[x]);
+                }
+            
+                res.render('lista/companhias',{paises:paises, companhias:companhias});
+            })
             
         });
 
@@ -45,9 +45,43 @@ module.exports=function(app){
     });
     
     app.get('/companhias/cadastro', function (req, res){
+
+        var paises = [];
+        let sql = 'SELECT * FROM itr_pais;'
+        con.query(sql, (err,result)=>{
+
+            if (err) throw err;
+
+            for (x in result){
+            
+                paises.push({codigo: result[x].CD_PAIS, nome: result[x].NM_PAIS});
+            }
+
+            
+        
+            
+            res.render('cadastro/cadastro_companhia', {paises: paises});
+        });
     
-        res.render('cadastro/cadastro_companhia');
+        
     
+    });
+
+    app.post('/companhias/cadastrar', function(req,res){
+        
+        const cad = req.body;
+
+        //console.log(cad);
+
+        let sql = 'INSERT INTO itr_cmpn_aerea ( CD_CMPN_AEREA, NM_CMPN_AEREA, CD_PAIS) VALUES (' + mysql.escape(cad.cod_companhia) + ', ' + mysql.escape(cad.nome) + ',' + mysql.escape(cad.pais) + ');';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            console.log('Companhia Aerea cadastrado com sucesso!');
+        
+            res.redirect('/companhias');
+        });
     });
     
     app.get('/companhias/editar', function (req, res){
@@ -79,5 +113,22 @@ module.exports=function(app){
 
         });
 
+    });
+
+    app.get('/companhias/verificarId', function(req, res){
+
+        let cod = req.query.cod;
+        
+        let sql = 'SELECT * FROM itr_cmpn_aerea WHERE CD_CMPN_AEREA = ' + mysql.escape(cod) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            if(result == ''){
+                res.send('Código disponível')
+            } else {
+                res.status(500).send({ error: 'something blew up' })
+            }
+        });
     });
 };

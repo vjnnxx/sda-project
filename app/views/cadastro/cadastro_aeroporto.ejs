@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Aeroporto - Cadastro</title>
 </head>
 <body>
     <h1>Cadastro Aeroporto</h1>
 
 
-    <form action="" method="post">
+    <form action="/aeroportos/cadastrar" method="post">
+
+        <label for="cod_aeroporto">Código do Aeroporto</label>
+
+                <input type="text" name="cod_aeroporto" id="cod_aeroporto" maxlength="3">
+        </br></br>
 
         <label for="nome_cidade">Nome da cidade</label>
 
@@ -18,26 +23,59 @@
         </br></br>
 
         <label for="sigla_uf">Sigla UF</label>
+            
+            <select name="sigla_uf" id="sigla_uf">
+                <option value="">Nenhum</option>
+                <% for(var i=0;i< ufs.length;i++){ %>
+                    <option value="<%= ufs[i].SG_UF %>"><%= ufs[i].SG_UF %></option>
+                <% } %>
 
-                <select name="sigla_uf" id="sigla_uf">
-                <option value="sim">RJ</option>
+            </select>
             
 
-                </select>
+                
         </br></br>
 
         <label for="cod_pais">Cod. País</label>
 
-                <select name="cod_pais" id="cod_pais">
-                <option value="sim">BOND007</option>
-            
+            <select name="cod_pais" id="cod_pais">
+                <% for(var i=0;i< paises.length;i++){ %>
+                    <option value="<%= paises[i].CD_PAIS %>"><%= paises[i].CD_PAIS %></option>
+                <% } %>
 
-                </select>
+            </select>
         </br></br>
 
 
-        <input type="submit" >
+        <input type="submit" id="enviar" disabled>
         
     </form>
 </body>
+<script>
+
+    $(document).ready(function(){
+
+        $('#cod_aeroporto').blur(function(){
+
+            const text = $('#cod_aeroporto').val();
+            
+            if(text != ''){
+                $.ajax({
+                    url: '/aeroportos/verificarId',
+                    method: 'GET',
+                    data: {cod: text},
+                    success: response =>{
+                        console.log(response)
+                        $('#enviar').attr('disabled', false);
+                    },
+                    error: err =>{
+                        alert('Código já utilizado!');
+                        $('#enviar').attr('disabled', true);
+                    }
+                });
+            }
+            
+        })
+    });    
+</script>
 </html>

@@ -34,6 +34,23 @@ module.exports=function(app){
 
     });
 
+    app.post('/uf/cadastrar', function(req,res){
+        
+        const cad = req.body;
+
+        //console.log(cad);
+
+        let sql = 'INSERT INTO itr_uf ( SG_UF, NM_UF ) VALUES (' + mysql.escape(cad.sigla) + ', ' + mysql.escape(cad.nome) + ');';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            console.log('UF cadastrado com sucesso!');
+        
+            res.redirect('/uf');
+        });
+    });
+
     app.get('/uf/editar', function (req, res){
 
         res.render('editar/editar_uf');
@@ -61,6 +78,23 @@ module.exports=function(app){
            
             res.send(resultados);
 
+        });
+    });
+
+    app.get('/uf/verificarId', function(req, res){
+
+        let cod = req.query.cod;
+        
+        let sql = 'SELECT * FROM itr_uf WHERE SG_UF = ' + mysql.escape(cod) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            if(result == ''){
+                res.send('Código disponível')
+            } else {
+                res.status(500).send({ error: 'something blew up' })
+            }
         });
     });
 

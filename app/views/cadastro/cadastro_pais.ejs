@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>País - Cadastro</title>
 </head>
 <body>
     <h1>Cadastro País</h1>
 
 
-    <form action="" method="post">
+    <form action="/paises/cadastrar" method="post">
+
+        <label for="cod_pais">Código do País</label>
+
+                <input type="text" name="cod_pais" id="cod_pais" maxlength="2">
+        </br></br>
 
         <label for="nome_pais">Nome</label>
 
@@ -23,8 +28,35 @@
         </br></br>
 
 
-        <input type="submit" >
+        <input type="submit" id="enviar" disabled>
         
     </form>
 </body>
+<script>
+
+    $(document).ready(function(){
+
+        $('#cod_pais').blur(function(){
+
+            const text = $('#cod_pais').val();
+            
+            if(text != ''){
+                $.ajax({
+                    url: '/paises/verificarId',
+                    method: 'GET',
+                    data: {cod: text},
+                    success: response =>{
+                        console.log(response)
+                        $('#enviar').attr('disabled', false);
+                    },
+                    error: err =>{
+                        alert('Código já utilizado!');
+                        $('#enviar').attr('disabled', true);
+                    }
+                });
+            }
+            
+        })
+    });    
+</script>
 </html>

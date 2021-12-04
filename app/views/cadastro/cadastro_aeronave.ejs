@@ -3,36 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Aeronave - Cadastro</title>
 </head>
 <body>
     <h1>Cadastro Aeronave</h1>
 
 
-    <form action="" method="post">
+    <form action="/aeronaves/cadastrar" method="post">
 
-        <label for="cod_equipamento">Cod. Equipamento</label>
 
-                <select name="cod_equipamento" id="cod_equipamento">
-                <option value="sim">BOND007</option>
-            
+        <label>Código Aeronave</label>
 
-                </select>
+        <input type="text" id="cod_aeronave" name="cod_aeronave" maxlength="5" > <br> <br>
+
+        <label>Cod. Equipamento</label>
+
+        <select name="equipamento" id="equipamento">
+            <% for(var i=0;i< equipamentos.length;i++){ %>
+                <option value="<%= equipamentos[i].CD_EQPT %>"><%= equipamentos[i].CD_EQPT %></option>
+            <% } %>
+
+        </select>
         </br></br>
 
-        <label for="cod_companhia">Cod. Companhia</label>
+        <label >Cod. Companhia</label>
 
-                <select name="cod_companhia" id="cod_companhia">
-                <option value="sim">BOND007</option>
-            
+        <select name="companhia" id="companhia">
+            <% for(var i=0;i< companhias.length;i++){ %>
+                <option value="<%= companhias[i].CD_CMPN_AEREA %>"><%= companhias[i].CD_CMPN_AEREA %></option>
+            <% } %>
 
-                </select>
+        </select>
         </br></br>
 
 
-        <input type="submit" >
+        <input type="submit" id="enviar" disabled>
         
     </form>
 </body>
+
+<script>
+
+    $(document).ready(function(){
+
+        $('#cod_aeronave').blur(function(){
+
+            const text = $('#cod_aeronave').val();
+            
+            if(text != ''){
+                $.ajax({
+                    url: '/aeronaves/verificarId',
+                    method: 'GET',
+                    data: {cod: text},
+                    success: response =>{
+                        console.log(response)
+                        $('#enviar').attr('disabled', false);
+                    },
+                    error: err =>{
+                        alert('Código já utilizado!');
+                        $('#enviar').attr('disabled', true);
+                    }
+                });
+            }
+            
+        })
+    });    
+</script>
 </html>

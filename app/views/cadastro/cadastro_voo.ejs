@@ -3,23 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
     <title>Voos - Cadastro</title>
 </head>
 <body>
     <h1>Cadastro Voo</h1>
 
-    <form action="" method="post">
+    <form action="/voos/cadastrar" method="post">
+
+        <label for="num_voo">Número do Voo</label>
+
+        <input type="number" name="num_voo" id="num_voo">
+    </br></br>
+
         <label>Código da Rota de Voo</label>
-		<input type="text" id="cod_rota_voo" name="cod_rota_voo" value=""/>
+
+            <select name="rota" id="rota">
+                <% for(var i=0;i< rotas.length;i++){ %>
+                    <option value="<%= rotas[i].NR_ROTA_VOO %>"><%= rotas[i].NR_ROTA_VOO %></option>
+                <% } %>
+
+            </select>
+
+        
     </br></br>
 
         <label>Código da Aeronave</label>
-		<input type="text" id="cod_aeronave" name="cod_aeronave" value=""/>
+		<select name="aeronave" id="aeronave">
+            <% for(var i=0;i< aeronaves.length;i++){ %>
+                <option value="<%= aeronaves[i].CD_ARNV %>"><%= aeronaves[i].CD_ARNV %></option>
+            <% } %>
+
+        </select>
     </br></br>
 
-        <label for="data_nasc">Data saída</label>
-        <input type="date" id="data_nasc" name="data_nasc" min="1910-01-01">
+    <label for="data_saida">Data de saída</label>
+    <input type="text" name="data_saida" id="data_saida" name="data_saida" placeholder="YYYY/MM/DD" 
+    required pattern="^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])" 
+    title="Insira a data no formato YYYY/MM/DD"/>
     </br></br>
 
 

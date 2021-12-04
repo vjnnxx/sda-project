@@ -30,8 +30,39 @@ module.exports=function(app){
 
     app.get('/rotas/cadastro', function (req, res){
 
-        res.render('cadastro/cadastro_rota_voo');
+        let sql = 'SELECT * FROM itr_arpt;'; //pega todos os voos
+    
+        
+        let resultados = [];
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
 
+            for (x in result){
+                resultados.push(result[x]);
+            }
+
+            
+            
+            res.render('cadastro/cadastro_rota_voo', {aeroportos: resultados});
+        })
+
+    });
+
+    app.post('/rotas/cadastrar', function(req,res){
+        
+        const cad = req.body;
+
+        //console.log(cad);
+
+        let sql = 'INSERT INTO itr_rota_voo ( CD_ARPT_ORIG, CD_ARPT_DEST, VR_PASG) VALUES (' + mysql.escape(cad.cod_origem) + ', ' + mysql.escape(cad.cod_dest) + ', ' + mysql.escape(cad.val_passagem) + ');';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            console.log('Rota de voo cadastrado com sucesso!');
+        
+            res.redirect('/rotas');
+        });
     });
 
     app.get('/rotas/editar', function (req, res){

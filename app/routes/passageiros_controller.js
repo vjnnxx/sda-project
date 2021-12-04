@@ -58,7 +58,7 @@ module.exports=function(app){
 
         const cad = req.body;
 
-        console.log(cad)
+        //console.log(cad)
 
         let sql = 'SELECT CD_PSGR FROM itr_psgr WHERE NM_PSGR = UPPER(' + mysql.escape(cad.responsavel) + ');';
 
@@ -81,7 +81,7 @@ module.exports=function(app){
                 
                 console.log('Passageiro cadastrado com sucesso!');
         
-                res.redirect('/');
+                res.redirect('/passageiros');
             });
             
         });

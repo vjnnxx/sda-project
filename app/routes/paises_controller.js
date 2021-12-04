@@ -32,6 +32,23 @@ module.exports=function(app){
 
     });
 
+    app.post('/paises/cadastrar', function(req,res){
+        
+        const cad = req.body;
+
+        //console.log(cad);
+
+        let sql = 'INSERT INTO itr_pais ( CD_PAIS, NM_PAIS, QT_PPLC_PAIS) VALUES (' + mysql.escape(cad.cod_pais) + ', ' + mysql.escape(cad.nome_pais) + ', ' + mysql.escape(cad.quant_pop) + ');';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            console.log('País cadastrado com sucesso!');
+        
+            res.redirect('/paises');
+        });
+    });
+
     app.get('/paises/editar', function (req, res){
 
         res.render('editar/editar_pais');
@@ -60,6 +77,23 @@ module.exports=function(app){
                 res.send(resultados);
 
             });
+    });
+
+    app.get('/paises/verificarId', function(req, res){
+
+        let cod = req.query.cod;
+        
+        let sql = 'SELECT * FROM itr_pais WHERE CD_PAIS = ' + mysql.escape(cod) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            if(result == ''){
+                res.send('Código disponível')
+            } else {
+                res.status(500).send({ error: 'something blew up' })
+            }
+        });
     });
 
 }

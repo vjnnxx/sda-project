@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 
+
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -42,7 +43,42 @@ module.exports=function(app){
 
     app.get('/reservas/cadastro', function (req, res){
 
-        res.render('cadastro/cadastro_reserva');
+        let sql = 'SELECT * FROM itr_voo;'; //pega todos os voos
+    
+        
+        let resultados = [];
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            for (x in result){
+                resultados.push(result[x]);
+            }
+
+            
+            
+            res.render('cadastro/cadastro_reserva', {voos: resultados});
+        })
+
+    });
+
+
+    app.post('/reservas/cadastrar', function (req, res){
+
+        //console.log(req.body);
+        
+        let data = req.body;
+
+        let sql = 'INSERT INTO itr_resv (CD_PSGR, NR_VOO, DT_SAIDA_VOO, PC_DESC_PASG) VALUES (' + mysql.escape(data.codigo_passageiro) + ', ' + mysql.escape(data.codigo_voo) + ', ' + mysql.escape(data.data_saida) + ', ' + mysql.escape(data.desconto) + ');';
+        
+        con.query(sql, (err, result)=>{
+            if (err) return err;
+
+            console.log('Reserva feita com sucesso!')
+
+            res.send({success: 'Reserva feita com sucesso!'});
+        });
+        
+        console.log(req.body);
 
     });
 

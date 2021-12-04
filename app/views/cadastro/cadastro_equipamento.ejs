@@ -10,7 +10,11 @@
     <h1>Cadastro Equipamento</h1>
 
 
-    <form action="" method="post">
+    <form action="/equipamentos/cadastrar" method="post">
+
+    <label>Código Equipamento</label>
+    <input type="text" id="cod_equip" name="cod_equip" value=""/>
+    </br></br>
 
     <label>Nome</label>
 		<input type="text" id="nome" name="nome" value=""/>
@@ -19,7 +23,10 @@
     <label for="tipo_equip">Tipo de equipamento</label>
 
             <select name="tipo_equip" id="tipo_equip">
-            <option value="sim">VASCO</option>
+            <option value="JATO">JATO</option>
+            <option value="HELICOPTERO">HELICOPTERO</option>
+            <option value="TURBO HELICE">TURBO HELICE</option>
+
            
 
             </select>
@@ -28,18 +35,28 @@
     <label for="tipo_propulsor">Tipo de propulsor</label>
 
             <select name="tipo_propulsor" id="tipo_propulsor">
-            <option value="sim">SERIE A</option>
+            <option value="R">R</option>
+            <option value="M">M</option>
            
 
             </select>
     </br></br>
 
    <label>Quantidade de motores</label>
-		<input type="text" id="quant_motores" name="quant_motores" value=""/>
+   <select name="quant_motor" id="quant_motor">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+
+   
+
+    </select>
     </br></br>
     
     <label>Quantidade passageiros</label>
-		<input type="text" id="quant_passageiro" name="quant_passageiro" value=""/>
+		<input type="number" id="quant_passageiro" name="quant_passageiro" />
     </br></br>
        
 
