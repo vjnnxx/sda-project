@@ -81,9 +81,28 @@ module.exports=function(app){
 
     
 
-    app.get('/voos/editar', function (req, res){
+    app.get('/voos/editar/:id', function (req, res){
 
-        res.render('editar/editar_voo');
+        const id = req.params.id;
+        aux = id.split('_');
+        num = aux[0]
+        data=aux[1].replace(',','/')
+        data=data.replace(',','/')
+        
+
+        sql = 'SELECT * FROM itr_voo WHERE NR_VOO = ' + mysql.escape(num) + ' AND DT_SAIDA_VOO = ' + mysql.escape(data) + ';';
+
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+
+            res.render('editar/editar_voo', {voo: result});
+        });
+
+    });
+
+    app.post('/voos/editar/atualizar/:id', function(req,res){
 
     });
 

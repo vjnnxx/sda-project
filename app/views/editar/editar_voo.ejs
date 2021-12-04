@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Voos - Editar</title>
 </head>
 <body>
     <h1>Atualizar Voo</h1>
 
-    <form action="" method="post">
+    <form action="atualizar/<%= voo[0].NR_VOO %>_<%= voo[0].DT_SAIDA_VOO %>" method="post">
         <label>Código da Rota de Voo</label>
 		<input type="text" id="cod_rota_voo" name="cod_rota_voo" value=""/>
     </br></br>
@@ -18,13 +18,57 @@
 		<input type="text" id="cod_aeronave" name="cod_aeronave" value=""/>
     </br></br>
 
-        <label for="data_nasc">Data saída</label>
-        <input type="date" id="data_nasc" name="data_nasc" min="1910-01-01">
+        <label for="data_saida">Data saída</label>
+        <input type="text" name="data_saida" id="data_saida" name="data_saida" placeholder="YYYY/MM/DD" 
+    required pattern="^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])" 
+    title="Insira a data no formato YYYY/MM/DD"/>
     </br></br>
 
 
     <input type="submit" />
-    <button>Deletar</button>
+    <br> <br>
+    
     </form>
+
+    <button id="deletar">Deletar</button>
+
 </body>
+<script>
+
+    $(document).ready(function(){
+
+       var voo = '<%- JSON.stringify(voo[0]) %>';
+       voo = JSON.parse(voo)
+       
+
+
+       //Botão de deletar
+
+       $('#deletar').click(function(){
+            let check = confirm('Quer deletar amigao?');
+            
+            if(check){
+                $.ajax({
+                    url: '/passageiros/editar/deletar/' + passageiro.CD_PSGR  ,
+                    method: 'POST',
+                    success: response =>{
+                        console.log(response);
+
+                        set(function(){ 
+                            alert(response);
+                            location.href = '/passageiros';
+                        }, 1000);
+                    }
+                })
+            }
+       });
+
+
+       $('#cod_rota_voo').attr('placeholder', voo.NR_ROTA_VOO);
+       $('#cod_aeronave').attr('placeholder', voo.CD_ARNV);
+       $('#data_saida').attr('placeholder', voo.DT_SAIDA_VOO);
+      
+        
+    });
+</script>
 </html>
