@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>País - Editar</title>
 </head>
 <body>
     <h1>Atualizar País</h1>
 
 
-    <form action="" method="post">
+    <form action="atualizar/<%= paises[0].CD_PAIS %>" method="post">
 
         <label for="nome_pais">Nome</label>
 
@@ -24,7 +24,42 @@
 
 
         <input type="submit" >
-        <button>Deletar</button>
+        <button id="deletar">Deletar</button>
     </form>
 </body>
+<script>
+
+    $(document).ready(function(){
+       
+        var paises = '<%- JSON.stringify(paises[0]) %>';
+        paises = JSON.parse(paises);
+
+        $('#nome_pais').val(paises.NM_PAIS);
+        $('#quant_pop').val(paises.QT_PPLC_PAIS);
+
+        
+
+
+        //Botão de deletar
+
+       $('#deletar').click(function(){
+            let check = confirm('Quer deletar amigao?');
+            
+            if(check){
+                $.ajax({
+                    url: '/paises/editar/deletar/' + paises.CD_PAIS  ,
+                    method: 'POST',
+                    success: response =>{
+                        console.log(response);
+
+                        setTimeout(function(){ 
+                            alert(response);
+                            location.href = '/paises';
+                        }, 1000);
+                    }
+                })
+            }
+       });
+    });    
+</script>
 </html>

@@ -65,9 +65,63 @@ module.exports=function(app){
         });
     });
 
-    app.get('/rotas/editar', function (req, res){
+    app.get('/rotas/editar/:id', function (req, res){
 
-        res.render('editar/editar_rota_voo');
+        let sql = 'SELECT * FROM itr_arpt;';
+
+        const id = req.params.id;
+
+        let resultados = [];
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            for (x in result){
+                resultados.push(result[x]);
+            }
+
+            sql2 = 'SELECT * FROM itr_rota_voo WHERE NR_ROTA_VOO = ' + mysql.escape(id) + ';';
+            con.query(sql2, (err,result)=>{
+                if (err) throw err;
+
+                res.render('editar/editar_rota_voo', {aeroportos: resultados, rota: result});
+
+            });
+        
+        });
+
+    });
+
+    app.post('/rotas/editar/atualizar/:id', function(req, res){
+        
+        const id = req.params.id;
+
+        const data = req.body;
+        
+        let sql = 'UPDATE itr_rota_voo SET CD_ARPT_ORIG = ' + mysql.escape(data.cod_origem) + ', CD_ARPT_DEST = ' + mysql.escape(data.cod_dest) + ', VR_PASG = ' + mysql.escape(data.val_passagem) + 'WHERE NR_ROTA_VOO = ' + mysql.escape(id) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            console.log('Linhas afetadas: ' + result.affectedRows);
+        
+        });
+        
+        res.redirect('/rotas'); 
+    });
+
+    app.post('/rotas/editar/deletar/:id', function(req, res){
+      
+        const id = req.params.id;
+
+        let sql = 'DELETE FROM itr_rota_voo WHERE NR_ROTA_VOO =' + mysql.escape(id) + ';' ;
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+                
+            //console.log('Linhas afetadas: ' + result.affectedRows);
+            res.send('Rota de voo deletada com sucesso');
+            
+        });
 
     });
 

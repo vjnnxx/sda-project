@@ -55,9 +55,53 @@ module.exports=function(app){
     });
 
 
-    app.get('/equipamentos/editar', function (req, res){
+    app.get('/equipamentos/editar/:id', function (req, res){
 
-        res.render('editar/editar_equipamento');
+
+        let id = req.params.id;
+        
+
+        let sql = 'SELECT * FROM itr_eqpt WHERE CD_EQPT = ' + mysql.escape(id) + ';';
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            res.render('editar/editar_equipamento', {equipamento: result});
+        })
+        
+
+    });
+
+    app.post('/equipamentos/editar/atualizar/:id', function(req, res){
+        
+        const id = req.params.id;
+
+        const data = req.body;
+        
+        let sql = 'UPDATE itr_eqpt SET NM_EQPT = ' + mysql.escape(data.nome) + ', DC_TIPO_EQPT = ' + mysql.escape(data.tipo_equip) + ', QT_MOTOR = ' + mysql.escape(data.quant_motor) + ',  IC_TIPO_PRPS = ' + mysql.escape(data.tipo_propulsor) + ', QT_PSGR = ' + mysql.escape(data.quant_passageiro) + 'WHERE CD_EQPT = ' + mysql.escape(id) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            console.log('Linhas afetadas: ' + result.affectedRows);
+        
+        });
+        
+        res.redirect('/equipamentos');
+    });
+
+    app.post('/equipamentos/editar/deletar/:id', function(req, res){
+      
+        const id = req.params.id;
+
+        let sql = 'DELETE FROM itr_eqpt WHERE CD_EQPT =' + mysql.escape(id) + ';' ;
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+                
+            //console.log('Linhas afetadas: ' + result.affectedRows);
+            res.send('Equipamento deletado com sucesso');
+            
+        });
 
     });
 

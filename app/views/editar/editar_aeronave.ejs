@@ -3,36 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Aeronave - Editar</title>
 </head>
 <body>
     <h1>Atualizar Aeronave</h1>
 
 
-    <form action="" method="post">
+    <form action="/aeronaves/editar/atualizar/<%= aeronave[0].CD_ARNV %>" method="post">
 
-        <label for="cod_equipamento">Cod. Equipamento</label>
 
-                <select name="cod_equipamento" id="cod_equipamento">
-                <option value="sim">BOND007</option>
-            
+        <label>Código Aeronave</label>
 
-                </select>
+        <input type="text" id="cod_aeronave" name="cod_aeronave" maxlength="5" value="<%= aeronave[0].CD_ARNV %>" readonly  > <br> <br>
+
+        <label>Cod. Equipamento</label>
+
+        <select name="equipamento" id="equipamento">
+            <% for(var i=0;i< equipamentos.length;i++){ %>
+                <option value="<%= equipamentos[i].CD_EQPT %>"><%= equipamentos[i].CD_EQPT %></option>
+            <% } %>
+
+        </select>
         </br></br>
 
-        <label for="cod_companhia">Cod. Companhia</label>
+        <label >Cod. Companhia</label>
 
-                <select name="cod_companhia" id="cod_companhia">
-                <option value="sim">BOND007</option>
-            
+        <select name="companhia" id="companhia">
+            <% for(var i=0;i< companhias.length;i++){ %>
+                <option value="<%= companhias[i].CD_CMPN_AEREA %>"><%= companhias[i].CD_CMPN_AEREA %></option>
+            <% } %>
 
-                </select>
+        </select>
         </br></br>
 
 
-        <input type="submit" >
-        <button>Deletar</button>
-    </form>
+        <input type="submit" id="enviar">
+        
+    </form> <br>
+
+    <button id="deletar">Deletar</button>
 </body>
+
+<script>
+
+    $(document).ready(function(){
+
+        var aeronave = '<%- JSON.stringify(aeronave[0]) %>';
+        aeronave = JSON.parse(aeronave);
+
+        $('#equipamento').val(aeronave.CD_EQPT);
+        $('#companhia').val(aeronave.CD_CMPN_AEREA);
+
+
+        //Botão de deletar
+
+       $('#deletar').click(function(){
+            let check = confirm('Quer deletar amigao?');
+            
+            if(check){
+                $.ajax({
+                    url: '/aeronaves/editar/deletar/' + aeronave.CD_ARNV  ,
+                    method: 'POST',
+                    success: response =>{
+                        console.log(response);
+
+                        setTimeout(function(){ 
+                            alert(response);
+                            location.href = '/aeronaves';
+                        }, 1000);
+                    }
+                })
+            }
+       });
+    });    
+</script>
 </html>

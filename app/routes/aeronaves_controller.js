@@ -74,10 +74,81 @@ module.exports=function(app){
         });
     }); 
 
-    app.get('/aeronaves/editar', function (req, res){
+    app.get('/aeronaves/editar/:id', function (req, res){
 
-        res.render('editar/editar_aeronave');
+        const id = req.params.id;
 
+        let sql = 'SELECT *  FROM itr_eqpt;'; 
+        let sql2 = 'SELECT * FROM itr_cmpn_aerea;';
+
+        let equipamentos = [];
+        let companhias = [];
+        
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            for (x in result){
+                equipamentos.push(result[x]);
+            }
+
+            con.query(sql2, (err, result)=>{
+                if (err) throw err;
+    
+                for (x in result){
+                    companhias.push(result[x]);
+                }
+
+                let sql3 = 'SELECT * FROM itr_arnv WHERE CD_ARNV = ' + mysql.escape(id) + ';';
+                con.query(sql3, (err, result)=>{
+                    if (err) throw err;
+                    
+            
+                        res.render('editar/editar_aeronave', {aeronave: result, equipamentos: equipamentos, companhias: companhias});
+                    });
+    
+                
+            });
+            
+        });
+    });
+
+    app.post('/aeronaves/editar/atualizar/:id', function(req,res){
+
+        const id = req.params.id;
+
+        const data = req.body;
+
+        console.log(data);
+
+        let sql = 'UPDATE itr_arnv SET CD_EQPT =' + mysql.escape(data.equipamento) + ', CD_CMPN_AEREA =' + mysql.escape(data.companhia) + ' WHERE CD_ARNV =' + mysql.escape(id) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            console.log('Linhas afetadas: ' + result.affectedRows);
+
+            res.redirect('/aeronaves');
+        })
+        
+    });
+
+    app.post('/aeronaves/editar/deletar/:id', function(req, res){
+
+        const id = req.params.id;
+        
+        let sql = 'DELETE FROM itr_arnv WHERE CD_ARNV =' + mysql.escape(id) + ';' ;
+
+            con.query(sql, (err, result)=>{
+                if (err) throw err;
+                
+                //console.log('Linhas afetadas: ' + result.affectedRows);
+                res.send('Aeronave deletada com sucesso');
+            
+            });
+
+        
+        //res.send('Ta deletado doidao, id: ' + req.params)
+        
     });
 
 

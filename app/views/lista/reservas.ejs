@@ -7,6 +7,7 @@
     <title>Reservas</title>
 </head>
 <body>
+    <a href="/"> Home</a>
     <h1>Reservas</h1>
 
     <h2>Filtros</h2>
@@ -51,7 +52,7 @@
                         <td><%= reservas[i].PC_DESC_PASG %></td>
                         
                         <td> 
-                            <a href="/reservas/editar/<%=reservas[i].CD_PSGR %>">
+                            <a href="/reservas/editar/<%=reservas[i].CD_PSGR %>_<%=reservas[i].NR_VOO %>_<%=reservas[i].DT_SAIDA_VOO.split('/') %>">
                                 <button type="button"> Editar</button></td>
                             </a>
                             

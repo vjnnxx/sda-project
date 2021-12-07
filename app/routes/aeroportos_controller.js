@@ -76,10 +76,75 @@ module.exports=function(app){
         });
     });
     
-    app.get('/aeroportos/editar', function (req, res){
+    app.get('/aeroportos/editar/:id', function (req, res){
+        
+        const id = req.params.id;
+
+        let sql = 'SELECT *  FROM itr_pais'; 
+        let sql2 = 'SELECT * FROM itr_uf';
+
+        let paises = [];
+        let ufs = [];
+        
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+
+            for (x in result){
+                paises.push(result[x]);
+            }
+
+            con.query(sql2, (err, result)=>{
+                if (err) throw err;
     
-        res.render('editar/editar_aeroporto');
+                for (x in result){
+                    ufs.push(result[x]);
+                }
+
+                let sql3 = 'SELECT * FROM itr_arpt WHERE CD_ARPT =' + mysql.escape(id) + ';';
+                con.query(sql3, (err,result)=>{
+                    if (err) throw err;
+
+                    res.render('editar/editar_aeroporto', {paises: paises, ufs: ufs, aeroporto: result});
+                });
     
+                
+            });
+            
+        });
+
+        
+    
+    });
+
+    app.post('/aeroportos/editar/atualizar/:id', function(req,res){
+
+        const id = req.params.id;
+        
+        const data = req.body;
+        
+        let sql = 'UPDATE itr_arpt SET NM_CIDADE = UPPER ( ' + mysql.escape(data.nome_cidade) + '), SG_UF =' + mysql.escape(data.sigla_uf) + ', CD_PAIS = ' + mysql.escape(data.cod_pais) + ' WHERE CD_ARPT = ' + mysql.escape(id) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            console.log('Número de linhas afetadas ' + result.affectedRows);
+            res.redirect('/aeroportos');
+        });
+        
+    });
+
+    app.post('/aeroportos/editar/deletar/:id', function(req, res){
+        const id = req.params.id;
+       
+
+        let sql = 'DELETE FROM itr_arpt WHERE CD_ARPT = ' + mysql.escape(id) + ';'; 
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            //console.log('Linhas afetadas: ' + result.affectedRows);
+            res.send('Aeroporto deletado com sucesso');
+        
+        });
     });
 
     app.get('/aeroportos/busca', function (req, res){

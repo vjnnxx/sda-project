@@ -82,11 +82,82 @@ module.exports=function(app){
 
     });
 
-    app.get('/reservas/editar', function (req, res){
+    app.get('/reservas/editar/:id', function (req, res){
 
-        res.render('editar/editar_reserva');
+        const id = req.params.id;
+        aux = id.split('_')
+        cod_psgr = aux[0];
+        num_voo = aux[1];
+        data=aux[2].replace(',','/');
+        data=data.replace(',','/');
+
+        var voos = [];
+        let sql = 'SELECT * FROM itr_voo;'
+        con.query(sql, (err,result)=>{
+
+            if (err) throw err;
+
+            for (x in result){
+            
+                voos.push({num: result[x].NR_VOO});
+            }
+        });
+
+
+        let sql2 = 'SELECT * FROM itr_resv WHERE CD_PSGR =' + mysql.escape(cod_psgr) + 'AND NR_VOO =' + mysql.escape(num_voo) + 'AND DT_SAIDA_VOO =' + mysql.escape(data) + ';'
+        
+        con.query(sql2, (err, result)=>{
+            if (err) throw err;
+            
+    
+                res.render('editar/editar_reserva', {reservas: result, voos:voos});
+            });
+    
+    });
+
+    app.post('/reservas/editar/atualizar/:id', function(req,res){
+        
+        const id = req.params.id;
+        aux = id.split('_')
+        cod_psgr = aux[0];
+        num_voo = aux[1];
+        data=aux[2].replace(',','/');
+        data=data.replace(',','/');
+
+        const cad = req.body;
+        
+        let sql = 'UPDATE itr_resv  SET PC_DESC_PASG = ' + mysql.escape(cad.desc_passagem)  + ' WHERE CD_PSGR = ' + mysql.escape(cod_psgr) + ' AND DT_SAIDA_VOO = ' + mysql.escape(data) + ' AND NR_VOO = ' + mysql.escape(num_voo) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            console.log('Número de linhas afetadas ' + result.affectedRows);
+        });
+
+        res.redirect('/reservas');
+    });
+
+    app.post('/reservas/editar/deletar/:id', function(req, res){
+      
+        const id = req.params.id;
+        aux = id.split('_')
+        cod_psgr = aux[0];
+        num_voo = aux[1];
+        data=aux[2].replace(',','/');
+        data=data.replace(',','/');
+
+        let sql = 'DELETE FROM itr_resv WHERE CD_PSGR =' + mysql.escape(cod_psgr) + 'AND NR_VOO =' + mysql.escape(num_voo) +  'AND DT_SAIDA_VOO =' + mysql.escape(data) + ';' ;
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+                
+            //console.log('Linhas afetadas: ' + result.affectedRows);
+            res.send('Reserva deletada com sucesso');
+            
+        });
 
     });
+    
     app.get('/reservas/busca', function (req, res){
 
         let busca = req.query.busca;

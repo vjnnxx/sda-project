@@ -51,10 +51,50 @@ module.exports=function(app){
         });
     });
 
-    app.get('/uf/editar', function (req, res){
+    app.get('/uf/editar/:id', function (req, res){
 
-        res.render('editar/editar_uf');
+        const id = req.params.id;
 
+
+        sql = 'SELECT * FROM itr_uf WHERE SG_UF = ' + mysql.escape(id) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+                
+                res.render('editar/editar_uf', {uf: result});
+            });
+
+    });
+
+    app.post('/uf/editar/atualizar/:id', function(req,res){
+
+        const idPass = req.params.id;
+        
+        const data = req.body;
+
+        let sql = 'UPDATE itr_uf SET NM_UF = UPPER ( ' + mysql.escape(data.nome) + ') WHERE SG_UF = ' + mysql.escape(idPass) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            console.log('Número de linhas afetadas ' + result.affectedRows);
+            res.redirect('/uf');
+        });
+        
+    });
+
+    app.post('/uf/editar/deletar/:id', function(req, res){
+        const id = req.params.id;
+       
+
+        let sql = 'DELETE FROM itr_uf WHERE SG_UF = ' + mysql.escape(id) + ';'; 
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            //console.log('Linhas afetadas: ' + result.affectedRows);
+            res.send('UF deletado com sucesso');
+        
+        });
     });
 
     app.get('/uf/busca', function(req,res){

@@ -3,41 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Aeroporto - Editar</title>
 </head>
 <body>
     <h1>Atualizar Aeroporto</h1>
 
 
-    <form action="" method="post">
+    <form action="/aeroportos/editar/atualizar/<%= aeroporto[0].CD_ARPT %>" method="post">
+
+        <label for="cod_aeroporto">Código do Aeroporto</label>
+
+                <input type="text" name="cod_aeroporto" id="cod_aeroporto" maxlength="3" value=" <%= aeroporto[0].CD_ARPT %>" readonly>
+        </br></br>
 
         <label for="nome_cidade">Nome da cidade</label>
 
-                <input type="text" name="nome_cidade" id="nome_cidade">
+                <input type="text" name="nome_cidade" id="nome_cidade" value=" <%= aeroporto[0].NM_CIDADE %>">
         </br></br>
 
         <label for="sigla_uf">Sigla UF</label>
-
-                <select name="sigla_uf" id="sigla_uf">
-                <option value="sim">RJ</option>
             
+            <select name="sigla_uf" id="sigla_uf">
+                <option value="">Nenhum</option>
+                <% for(var i=0;i< ufs.length;i++){ %>
+                    <option value="<%= ufs[i].SG_UF %>"><%= ufs[i].SG_UF %></option>
+                <% } %>
 
-                </select>
+            </select>         
+
         </br></br>
 
         <label for="cod_pais">Cod. País</label>
 
-                <select name="cod_pais" id="cod_pais">
-                <option value="sim">BOND007</option>
-            
+            <select name="cod_pais" id="cod_pais">
+                <% for(var i=0;i< paises.length;i++){ %>
+                    <option value="<%= paises[i].CD_PAIS %>"><%= paises[i].CD_PAIS %></option>
+                <% } %>
 
-                </select>
+            </select>
         </br></br>
 
 
         <input type="submit" >
-        <button>Deletar</button>
-    </form>
+        
+    </form> <br>
+
+    <button id="deletar">Deletar</button>
 </body>
+<script>
+    $(document).ready(function(){
+        var aeroporto = '<%- JSON.stringify(aeroporto[0]) %>';
+        aeroporto = JSON.parse(aeroporto);
+
+
+        $('#sigla_uf').val(aeroporto.SG_UF);
+        $('#cod_pais').val(aeroporto.CD_PAIS);
+
+        $('#deletar').click(function(){
+            let check = confirm('Deseja deletar?');
+            
+            if(check){
+                $.ajax({
+                    url: '/aeroportos/editar/deletar/' + aeroporto.CD_EQPT  ,
+                    method: 'POST',
+                    success: response =>{
+                        console.log(response);
+
+                        setTimeout(function(){ 
+                            alert(response);
+                            location.href = '/aeroportos';
+                        }, 1000);
+                    }
+                })
+            }
+       });
+
+    });
+</script>
 </html>

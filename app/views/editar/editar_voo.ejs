@@ -9,19 +9,19 @@
 <body>
     <h1>Atualizar Voo</h1>
 
-    <form action="atualizar/<%= voo[0].NR_VOO %>_<%= voo[0].DT_SAIDA_VOO %>" method="post">
+    <form action="atualizar/<%= voo[0].NR_VOO %>_<%= voo[0].DT_SAIDA_VOO.split('/') %>" method="post">
         <label>Código da Rota de Voo</label>
-		<input type="text" id="cod_rota_voo" name="cod_rota_voo" value=""/>
+		<input type="text" id="cod_rota_voo" name="cod_rota_voo" value="" required/>
     </br></br>
 
         <label>Código da Aeronave</label>
-		<input type="text" id="cod_aeronave" name="cod_aeronave" value=""/>
+		<input type="text" id="cod_aeronave" name="cod_aeronave" value="" required/>
     </br></br>
 
         <label for="data_saida">Data saída</label>
-        <input type="text" name="data_saida" id="data_saida" name="data_saida" placeholder="YYYY/MM/DD" 
-    required pattern="^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])" 
-    title="Insira a data no formato YYYY/MM/DD"/>
+        <input type="text" name="data_saida" id="data_saida" name="data_saida" 
+    title="Insira a data no formato YYYY/MM/DD" readonly/>
+
     </br></br>
 
 
@@ -42,21 +42,24 @@
        
 
 
+        var credenciais = voo.NR_VOO + '_' +  voo.DT_SAIDA_VOO;
+        credenciais = credenciais.split('/');
+
        //Botão de deletar
 
        $('#deletar').click(function(){
-            let check = confirm('Quer deletar amigao?');
+            let check = confirm('Quer deletar?');
             
             if(check){
                 $.ajax({
-                    url: '/passageiros/editar/deletar/' + passageiro.CD_PSGR  ,
+                    url: '/voos/editar/deletar/' + credenciais ,
                     method: 'POST',
                     success: response =>{
                         console.log(response);
 
-                        set(function(){ 
+                        setTimeout(function(){ 
                             alert(response);
-                            location.href = '/passageiros';
+                            location.href = '/voos';
                         }, 1000);
                     }
                 })
@@ -64,9 +67,9 @@
        });
 
 
-       $('#cod_rota_voo').attr('placeholder', voo.NR_ROTA_VOO);
-       $('#cod_aeronave').attr('placeholder', voo.CD_ARNV);
-       $('#data_saida').attr('placeholder', voo.DT_SAIDA_VOO);
+       $('#cod_rota_voo').val(voo.NR_ROTA_VOO);
+       $('#cod_aeronave').val(voo.CD_ARNV);
+       $('#data_saida').val(voo.DT_SAIDA_VOO);
       
         
     });

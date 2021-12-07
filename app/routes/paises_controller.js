@@ -49,10 +49,50 @@ module.exports=function(app){
         });
     });
 
-    app.get('/paises/editar', function (req, res){
+    app.get('/paises/editar/:id', function (req, res){
 
-        res.render('editar/editar_pais');
+        const id = req.params.id;
 
+        sql = 'SELECT * FROM itr_pais WHERE CD_PAIS = ' + mysql.escape(id) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+                
+                res.render('editar/editar_pais', {paises: result});
+            });
+
+
+    });
+
+    app.post('/paises/editar/atualizar/:id', function(req,res){
+
+        const idPass = req.params.id;
+        
+        const data = req.body;
+
+        let sql = 'UPDATE itr_pais SET NM_PAIS = UPPER ( ' + mysql.escape(data.nome_pais) + '), QT_PPLC_PAIS =' + mysql.escape(data.quant_pop) + ' WHERE CD_PAIS = ' + mysql.escape(idPass) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            console.log('Número de linhas afetadas ' + result.affectedRows);
+            res.redirect('/paises');
+        });
+        
+    });
+
+    app.post('/paises/editar/deletar/:id', function(req, res){
+        const id = req.params.id;
+       
+
+        let sql = 'DELETE FROM itr_pais WHERE CD_PAIS = ' + mysql.escape(id) + ';'; 
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            //console.log('Linhas afetadas: ' + result.affectedRows);
+            res.send('País deletado com sucesso');
+        
+        });
     });
 
     app.get('/paises/busca', function(req,res){

@@ -216,11 +216,11 @@ module.exports=function(app){
                 if (err) throw err;
                 
                 //console.log('Linhas afetadas: ' + result.affectedRows);
-                res.send('Post deletado com sucesso');
+                res.send('Passageiro deletado com sucesso');
             
             });
 
-        console.log(req.params);
+        
         //res.send('Ta deletado doidao, id: ' + req.params)
         
     });

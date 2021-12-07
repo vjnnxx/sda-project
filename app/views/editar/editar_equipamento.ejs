@@ -3,48 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Equipamento - Editar</title>
 </head>
 <body>
     <h1>Atualizar Equipamento</h1>
 
 
-    <form action="" method="post">
+    <form action="/equipamentos/editar/atualizar/<%- equipamento[0].CD_EQPT %>" method="post">
 
     <label>Nome</label>
-		<input type="text" id="nome" name="nome" value=""/>
+		<input type="text" id="nome" name="nome" value="<%= equipamento[0].NM_EQPT %>"/>
     </br></br>
 
     <label for="tipo_equip">Tipo de equipamento</label>
 
             <select name="tipo_equip" id="tipo_equip">
-            <option value="sim">VASCO</option>
-           
+            <option value="JATO">JATO</option>
+            <option value="HELICOPTERO">HELICOPTERO</option>
+            <option value="TURBO HELICE">TURBO HELICE</option>
 
             </select>
     </br></br>
+
 
     <label for="tipo_propulsor">Tipo de propulsor</label>
 
             <select name="tipo_propulsor" id="tipo_propulsor">
-            <option value="sim">SERIE A</option>
+            <option value="R">R</option>
+            <option value="M">M</option>
            
 
             </select>
     </br></br>
 
+   
    <label>Quantidade de motores</label>
-		<input type="text" id="quant_motores" name="quant_motores" value=""/>
+   <select name="quant_motor" id="quant_motor">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
     </br></br>
     
     <label>Quantidade passageiros</label>
-		<input type="text" id="quant_passageiro" name="quant_passageiro" value=""/>
+		<input type="text" id="quant_passageiro" name="quant_passageiro" value="<%= equipamento[0].QT_PSGR %>"/>
     </br></br>
        
 
     <input type="submit" >
-    <button>Deletar</button>
+    <button id="deletar">Deletar</button>
     </form>
 </body>
+<script>
+  $(document).ready(function(){
+    
+    var equipamento = '<%- JSON.stringify(equipamento[0]) %>';
+    equipamento = JSON.parse(equipamento)
+
+    $('#tipo_equip').val(equipamento.DC_TIPO_EQPT);
+    $('#tipo_propulsor').val(equipamento.IC_TIPO_PRPS);
+    $('#quant_motor').val(equipamento.QT_MOTOR);
+
+    $('#deletar').click(function(){
+            let check = confirm('Quer deletar amigao?');
+            
+            if(check){
+                $.ajax({
+                    url: '/equipamentos/editar/deletar/' + equipamento.CD_EQPT  ,
+                    method: 'POST',
+                    success: response =>{
+                        console.log(response);
+
+                        setTimeout(function(){ 
+                            alert(response);
+                            location.href = '/equipamentos';
+                        }, 1000);
+                    }
+                })
+            }
+       });
+  });
+</script>
 </html>

@@ -2,45 +2,79 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
     <title>Rota de voo - Editar</title>
 </head>
 <body>
     <h1>Atualizar Rota de voo</h1>
 
-    <form action="" method="post">
+    <form action="/rotas/editar/atualizar/<%= rota[0].NR_ROTA_VOO %>" method="post">
         
-    <label for="cod_aeroporto_origem">Cod. Aeroporto Origem</label>
+        <label>Código Aeroporto Origem</label>
 
-            <select name="cod_aeroporto_origem" id="cod_aeroporto_origem">
-            <option value="sim">A001</option>
-            <option value="nao">A002</option>
-           
+        <select name="cod_origem" id="cod_origem">
+            <% for(var i=0;i< aeroportos.length;i++){ %>
+                <option value="<%= aeroportos[i].CD_ARPT %>"><%= aeroportos[i].CD_ARPT %></option>
+            <% } %>
 
-            </select>
+        </select>
+
+    
     </br></br>
 
-    <label for="cod_aeroporto_destino">Cod. Aeroporto Origem</label>
+    <label>Código Aeroporto Destino</label>
 
-            <select name="cod_aeroporto_destino" id="cod_aeroporto_destino">
-            <option value="sim">A001</option>
-            <option value="nao">A002</option>
-           
+    <select name="cod_dest" id="cod_dest">
+        <% for(var i=0;i< aeroportos.length;i++){ %>
+            <option value="<%= aeroportos[i].CD_ARPT %>"><%= aeroportos[i].CD_ARPT %></option>
+        <% } %>
 
-            </select>
+    </select>
+
+
     </br></br>
 
 
         <label>Valor passagem</label>
-		<input type="text" id="val_passagem" name="val_passagem" value=""/>
+		<input type="number" id="val_passagem" name="val_passagem" value="<%= rota[0].VR_PASG %>"/>
     </br></br>
 
-
-       
-
     <input type="submit" >
-    <button>Deletar</button>
-    </form>
+
+    
+    </form> <br>
+    <button id="deletar">Deletar</button>
+    
 </body>
+
+<script>
+    $(document).ready(function(){
+      
+      var rota = '<%- JSON.stringify(rota[0]) %>';
+      rota = JSON.parse(rota)
+  
+      $('#cod_origem').val(rota.CD_ARPT_ORIG);
+      $('#cod_dest').val(rota.CD_ARPT_DEST);
+  
+      $('#deletar').click(function(){
+              let check = confirm('Deseja deletar?');
+              
+              if(check){
+                  $.ajax({
+                      url: '/rotas/editar/deletar/' + rota.NR_ROTA_VOO,
+                      method: 'POST',
+                      success: response =>{
+                          console.log(response);
+  
+                          setTimeout(function(){ 
+                              alert(response);
+                              location.href = '/rotas';
+                          }, 1000);
+                      }
+                  })
+              }
+         });
+    });
+  </script>
+
 </html>

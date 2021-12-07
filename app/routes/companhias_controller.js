@@ -84,10 +84,66 @@ module.exports=function(app){
         });
     });
     
-    app.get('/companhias/editar', function (req, res){
+    app.get('/companhias/editar/:id', function (req, res){
+
+        const id = req.params.id;
+
+        var paises = [];
+        let sql = 'SELECT * FROM itr_pais;'
+        con.query(sql, (err,result)=>{
+
+            if (err) throw err;
+
+            for (x in result){
+            
+                paises.push({codigo: result[x].CD_PAIS, nome: result[x].NM_PAIS});
+            }
+
+            let sql2 = 'SELECT * FROM itr_cmpn_aerea WHERE CD_CMPN_AEREA =' + mysql.escape(id) + ';';
+            con.query(sql2, (err, result)=>{
+                if (err) throw err;
+
+                res.render('editar/editar_companhia', {paises: paises, companhia: result});
+            });
+            
+            
+        });   
     
-        res.render('editar/editar_companhia');
-    
+    });
+
+    app.post('/companhias/editar/atualizar/:id', function(req,res){
+        
+        const id = req.params.id;
+
+        const cad = req.body;
+
+        console.log(cad)
+        let sql = 'UPDATE itr_cmpn_aerea SET NM_CMPN_AEREA = ' + mysql.escape(cad.nome) + ', CD_PAIS = ' + mysql.escape(cad.cod_pais) +  'WHERE CD_CMPN_AEREA = ' + mysql.escape(id) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            console.log('Linhas afetadas: ' + result.affectedRows);
+        
+        });
+        
+        res.redirect('/companhias');
+    });
+
+    app.post('/companhias/editar/deletar/:id', function(req, res){
+      
+        const id = req.params.id;
+
+        let sql = 'DELETE FROM itr_cmpn_aerea WHERE CD_CMPN_AEREA =' + mysql.escape(id) + ';' ;
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+                
+            //console.log('Linhas afetadas: ' + result.affectedRows);
+            res.send('Companhia deletada com sucesso!');
+            
+        });
+
     });
 
     app.get('/companhias/busca', function (req, res){

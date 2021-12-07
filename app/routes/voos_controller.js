@@ -85,9 +85,10 @@ module.exports=function(app){
 
         const id = req.params.id;
         aux = id.split('_');
-        num = aux[0]
-        data=aux[1].replace(',','/')
-        data=data.replace(',','/')
+        num = aux[0];
+        data=aux[1].replace(',','/');
+        data=data.replace(',','/');
+        
         
 
         sql = 'SELECT * FROM itr_voo WHERE NR_VOO = ' + mysql.escape(num) + ' AND DT_SAIDA_VOO = ' + mysql.escape(data) + ';';
@@ -103,7 +104,24 @@ module.exports=function(app){
     });
 
     app.post('/voos/editar/atualizar/:id', function(req,res){
+        
+        const id = req.params.id;
+        aux = id.split('_');
+        num = aux[0];
+        data=aux[1].replace(',','/');
+        data=data.replace(',','/');
 
+        const cad = req.body;
+        
+        let sql = 'UPDATE itr_voo SET NR_ROTA_VOO =' + mysql.escape(cad.cod_rota_voo) +', CD_ARNV = ' + mysql.escape(cad.cod_aeronave)  + ' WHERE NR_VOO = ' + mysql.escape(num) + ' AND DT_SAIDA_VOO = ' + mysql.escape(data) + ';';
+
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            console.log('Número de linhas afetadas ' + result.affectedRows);
+        });
+
+        res.redirect('/voos');
     });
 
     app.get('/voos/busca', function (req, res){
@@ -129,6 +147,24 @@ module.exports=function(app){
 
         });
 
+    });
+
+    app.post('/voos/editar/deletar/:id', function(req, res){
+        const id = req.params.id;
+        aux = id.split('_');
+        num = aux[0];
+        data=aux[1].replace(',','/');
+        data=data.replace(',','/');
+        
+
+        let sql = 'DELETE FROM itr_voo WHERE NR_VOO = ' + mysql.escape(num) + 'AND DT_SAIDA_VOO =' + mysql.escape(data) + ';'; 
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            //console.log('Linhas afetadas: ' + result.affectedRows);
+            res.send('Voo deletado com sucesso');
+        
+        });
     });
 
     app.get('/voos/getData', function (req, res){

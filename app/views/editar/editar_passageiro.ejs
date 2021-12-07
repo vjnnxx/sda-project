@@ -11,7 +11,7 @@
     
     <form action="atualizar/<%= passageiro[0].CD_PSGR %>" method="post">
         <label>Nome</label>
-		<input type="text" id="nome" name="nome" value="" placeholder="<%= passageiro[0].NM_PSGR %>"/>
+		<input type="text" id="nome" name="nome" value="<%= passageiro[0].NM_PSGR %>"/>
     </br></br>
 
         <label>Responsável</label>
@@ -39,10 +39,13 @@
         
         <label for="sexo">Sexo</label>
 
+            
             <select name="sexo" id="sexo">
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-            <option value="O">Outros</option>
+
+                
+            <option value="M" <% if(passageiro[0].IC_SEXO_PSGR == 'M'){ %> selected="true"  <% } %>>Masculino</option>
+            <option value="F" <% if(passageiro[0].IC_SEXO_PSGR == 'F'){ %> selected="true" <% } %>>Feminino</option>
+            <option value="O" <% if(passageiro[0].IC_SEXO_PSGR == 'O'){ %> selected="true" <% } %>>Outros</option>
 
             </select>
     </br></br>
@@ -50,8 +53,8 @@
         <label for="estado_civil">Estado Civil</label>
 
             <select name="estado_civil" id="estado_civil">
-            <option value="S">Solteiro</option>
-            <option value="C">Casado</option>
+            <option value="S" <% if(passageiro[0].IC_ESTD_CIVIL == 'S'){ %> selected="true" <% } %> >Solteiro</option>
+            <option value="C" <% if(passageiro[0].IC_ESTD_CIVIL == 'C'){ %> selected="true" <% } %>>Casado</option>
             
 
             </select>
@@ -101,7 +104,7 @@
                     success: response =>{
                         console.log(response);
 
-                        set(function(){ 
+                        setTimeout(function(){ 
                             alert(response);
                             location.href = '/passageiros';
                         }, 1000);
