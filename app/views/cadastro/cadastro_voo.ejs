@@ -3,47 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Voos - Cadastro</title>
 </head>
 <body>
-    <h1>Cadastro Voo</h1>
+    <nav class="navbar navbar-expand-md navbar-light bg-primary">
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>      
+        <img src="/img/logo.png" />  
+    </nav>
+    
 
-    <form action="/voos/cadastrar" method="post">
+    <div class="container" style="width: 50%;">
+        <h1>Cadastro Voo</h1>
+        <form action="/voos/cadastrar" method="post">
 
-        <label for="num_voo">Número do Voo</label>
+        <div class="form-group">
+            <label for="num_voo">Número do Voo</label>
 
-        <input type="number" name="num_voo" id="num_voo">
-    </br></br>
+            <input type="number" name="num_voo" id="num_voo" class="form-control form-control-md" min="0">
+        </div>
 
-        <label>Código da Rota de Voo</label>
+        <div class="form-group">
+            <label for="rota">Código da Rota de Voo</label>
 
-            <select name="rota" id="rota">
+            <select name="rota" id="rota" class="form-control form-control-md">
                 <% for(var i=0;i< rotas.length;i++){ %>
                     <option value="<%= rotas[i].NR_ROTA_VOO %>"><%= rotas[i].NR_ROTA_VOO %></option>
                 <% } %>
 
+            </select>   
+        </div>
+
+        <div class="form-group">
+            <label for="aeronave">Código da Aeronave</label>
+		    <select name="aeronave" id="aeronave" class="form-control form-control-md">
+                <% for(var i=0;i< aeronaves.length;i++){ %>
+                    <option value="<%= aeronaves[i].CD_ARNV %>"><%= aeronaves[i].CD_ARNV %></option>
+                <% } %>
+
             </select>
+        </div>
 
-        
-    </br></br>
+        <div class="form-group">
+            <label for="data_saida">Data de saída</label>
+            <input type="text" name="data_saida" id="data_saida" name="data_saida" class="form-control form-control-md" placeholder="YYYY/MM/DD" 
+            required pattern="^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])" 
+            title="Insira a data no formato YYYY/MM/DD"/>
+        </div>
 
-        <label>Código da Aeronave</label>
-		<select name="aeronave" id="aeronave">
-            <% for(var i=0;i< aeronaves.length;i++){ %>
-                <option value="<%= aeronaves[i].CD_ARNV %>"><%= aeronaves[i].CD_ARNV %></option>
-            <% } %>
-
-        </select>
-    </br></br>
-
-    <label for="data_saida">Data de saída</label>
-    <input type="text" name="data_saida" id="data_saida" name="data_saida" placeholder="YYYY/MM/DD" 
-    required pattern="^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])" 
-    title="Insira a data no formato YYYY/MM/DD"/>
-    </br></br>
-
-
-    <input type="submit" >
+        <div class="form-group">
+            <input type="submit" class="btn btn-success" >
+        </div>
+    </div>
+    
     </form>
 </body>
 </html>

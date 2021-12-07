@@ -169,7 +169,7 @@ module.exports=function(app){
 
     app.get('/voos/getData', function (req, res){
 
-        console.log(req.query.nr_rota);
+       
 
         let codigo = req.query.nr_rota;
 

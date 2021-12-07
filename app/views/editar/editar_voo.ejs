@@ -4,33 +4,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Voos - Editar</title>
 </head>
 <body>
-    <h1>Atualizar Voo</h1>
 
-    <form action="atualizar/<%= voo[0].NR_VOO %>_<%= voo[0].DT_SAIDA_VOO.split('/') %>" method="post">
-        <label>Código da Rota de Voo</label>
-		<input type="text" id="cod_rota_voo" name="cod_rota_voo" value="" required/>
-    </br></br>
-
-        <label>Código da Aeronave</label>
-		<input type="text" id="cod_aeronave" name="cod_aeronave" value="" required/>
-    </br></br>
-
-        <label for="data_saida">Data saída</label>
-        <input type="text" name="data_saida" id="data_saida" name="data_saida" 
-    title="Insira a data no formato YYYY/MM/DD" readonly/>
-
-    </br></br>
-
-
-    <input type="submit" />
-    <br> <br>
+    <nav class="navbar navbar-expand-md navbar-light bg-primary">
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>      
+        <img src="/img/logo.png" />  
+    </nav>
     
-    </form>
 
-    <button id="deletar">Deletar</button>
+    <div class="container" style="width: 50%;">
+        <h1>Editar Voo</h1>
+        <form action="atualizar/<%= voo[0].NR_VOO %>_<%= voo[0].DT_SAIDA_VOO.split('/') %>" method="post">
+
+            <div class="form-group">
+                <label for="rota">Código da Rota de Voo</label>
+
+                <input type="text" id="cod_rota_voo" name="cod_rota_voo" class="form-control form-control-md"required/>
+
+                </select>   
+            </div>
+
+            <div class="form-group">
+                <label for="aeronave">Código da Aeronave</label>
+                <input type="text" id="cod_aeronave" name="cod_aeronave" class="form-control form-control-md" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="data_saida">Data de saída</label>
+                <label for="data_saida">Data saída</label>
+            <input type="text" name="data_saida" id="data_saida" name="data_saida" 
+            title="Insira a data no formato YYYY/MM/DD" class="form-control form-control-md" readonly/>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" >
+            </div>
+        </form>
+        <button id="deletar" class="btn btn-danger">Deletar</button>
+    </div>
 
 </body>
 <script>

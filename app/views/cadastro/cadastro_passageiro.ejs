@@ -3,59 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Passageiros - Cadastro</title>
 </head>
 <body>
-    <h1>Cadastro Passageiro</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand" href="/"><h1 class="h1"> SDA </h1></a>        
+    </nav>
 
-    <form action="/passageiros/cadastrar" method="post">
-        <label>Nome</label>
-		<input type="text" id="nome" name="nome" value=""/>
-    </br></br>
 
-        <label>Responsável</label>
-		<input type="text" id="responsavel" name="responsavel" value=""/>
-    </br></br>
 
-    <label for="data_nasc">Data de nascimento</label>
-    <input type="text" name="data_nasc" id="data_nasc" name="data_nasc" placeholder="YYYY/MM/DD" 
-    required pattern="^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])" 
-    title="Insira a data no formato YYYY/MM/DD"/>
-    </br></br>
+    <div style="width: 50%;" class="container">
+        <h1 class="h1">Cadastro Passageiro</h1>
+        <form action="/passageiros/cadastrar" method="post">
 
-        <label for="pais">País</label>
-
-            <select name="pais" id="pais">
-                <% for(var i=0;i< paises.length;i++){ %>
-                    <option value="<%= paises[i].codigo %>"><%= paises[i].nome %></option>
-                <% } %>
-
-            </select>
-    </br></br>
-        
-        <label for="sexo">Sexo</label>
-
-            <select name="sexo" id="sexo">
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-            <option value="O">Outros</option>
-
-            </select>
-    </br></br>
-
-        <label for="estado_civil">Estado Civil</label>
-
-            <select name="estado_civil" id="estado_civil">
-            <option value="S">Solteiro</option>
-            <option value="C">Casado</option>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" class="form-control form-control-md" value=""/>
+    
+            </div>
             
+            <div class="form-group">
+                <label for="responsavel">Responsável</label>
+                <input type="text" id="responsavel" class="form-control form-control-md" name="responsavel" value=""/>
+            </div>
+            
+            <div class="form-group">
+                <label for="data_nasc">Data de nascimento</label>
+                <input type="text" class="form-control form-control-md" name="data_nasc" id="data_nasc" name="data_nasc" placeholder="YYYY/MM/DD" 
+                required pattern="^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])" 
+                title="Insira a data no formato YYYY/MM/DD"/>
+            </div>
+    
+        
+            <div class="form-group">
+                <label for="pais">País</label>
+    
+                <select name="pais" id="pais" class="form-control form-control-md">
+                    <% for(var i=0;i< paises.length;i++){ %>
+                        <option value="<%= paises[i].codigo %>"><%= paises[i].nome %></option>
+                    <% } %>
+    
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="sexo">Sexo</label>
+    
+                <select name="sexo" id="sexo" class="form-control form-control-md">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+                <option value="O">Outros</option>
+    
+                </select>
+            </div>
+            
+            
+            <div class="form-group">
+                <label for="estado_civil" >Estado Civil</label>
+    
+                <select name="estado_civil" id="estado_civil" class="form-control form-control-md">
+                <option value="S">Solteiro</option>
+                <option value="C">Casado</option>
+                
+    
+                </select>
+            </div>
+            
+            
+            <div class="form-group">
+                <input type="submit" class="btn btn-success"/>
+            </div>
 
-            </select>
-    </br></br>
-
-    <input type="submit" />
-    </form>
+            
+    
+                
+        
+    
+        
+        </form>
+    </div>
+    
+    
 </body>
 
 

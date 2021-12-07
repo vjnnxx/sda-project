@@ -4,43 +4,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Reservas</title>
 </head>
 <body>
-    <a href="/"> Home</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
+        <img src="/img/logo.png" />           
+    </nav>
+    
     <h1>Reservas</h1>
 
-    <h2>Filtros</h2>
 
-    <h3>Código do voo</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h2 class="h3">Filtros</h2>
 
-    <label>Maior que: </label>
-    <input type="number" id="maior_cod" name="cod_voo" value=""/><br>
-    <label>Menor que:</label>
-    <input type="number" id="menor_cod" name="cod_voo" value=""/><br><br>
+                <h3 class="h3">Código do voo</h3>
 
-    <input type="text" name="busca" id="busca" required>
+                <label>Maior que:</label>
+                <input type="number" id="maior_cod" name="cod_voo" /><br>
+                <label>Menor que:</label>
+                <input type="number" id="menor_cod" name="cod_voo" value=""/><br><br>
+            </div>
 
-    <button type="submit" id="send-busca"> Enviar</button>
+            <div class="col-sm">
+                <h3> Buscar </h3>
+                <input type="text" name="busca" id="busca" required>
 
-    <a href="/reservas">
-        <button> Limpar </button>
-    </a> <br>
+                <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
 
-    <a href="/reservas/cadastro">
-        <button> Cadastrar</button>
-    </a>
+                <a href="/reservas">
+                    <button class="btn btn-secondary"> Limpar </button>
+                </a> 
+
+                <a href="/reservas/cadastro">
+                    <button class="btn btn-info"> Cadastrar</button>
+                </a>
+            </div>
+        </div>
+    </div>
     
-    <div id="resultados">
-        <table id="table-reservas">
-        
-                <tr>
-                    <td>CD_PSGR</td>
-                    <td>NR_VOO</td>
-                    <td>DT_SAIDA_VOO</td>
-                    <td>PC_DESC_PASG</td>
-                    <td>Editar</td>
-                </tr>
+
+    
+
+    </div>
+    
+    <div id="resultados" class="container" style="width: 80%;">
+        <table id="table-reservas" class="table table-sm">
+
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>CD_PSGR</th>
+                        <th>NR_VOO</th>
+                        <th>DT_SAIDA_VOO</th>
+                        <th>PC_DESC_PASG</th>
+                        <th>Editar</th>
+                    </tr>
+                </thead>
+                
 
 
             
@@ -53,7 +78,7 @@
                         
                         <td> 
                             <a href="/reservas/editar/<%=reservas[i].CD_PSGR %>_<%=reservas[i].NR_VOO %>_<%=reservas[i].DT_SAIDA_VOO.split('/') %>">
-                                <button type="button"> Editar</button></td>
+                                <button type="button" class="btn btn-info"> Editar</button></td>
                             </a>
                             
                     </tr>

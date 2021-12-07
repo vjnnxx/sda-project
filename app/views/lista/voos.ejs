@@ -4,50 +4,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Voos</title>
 </head>
 <body>
-    <a href="/"> Home</a>
+    <nav class="navbar navbar-expand-md navbar-light bg-primary">
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>      
+        <img src="/img/logo.png" />  
+    </nav>
     <h1>Voos</h1>
 
-    <h2>Filtros</h2>
     
     
-    <label>Local de origem </label>
-    <input type="text" id="local_orig" name="local_orig" value=""/> 
-    <a href="">
-        <button>Filtrar</button>
-    </a>
+    <div class="container">
+        <h2 class="h2">Filtros</h2>
+        <div class="row">
+            <div class="col-sm">
+                <label>Local de origem </label>
+                <input type="text" id="local_orig" name="local_orig" value=""/> 
+                <a href="">
+                <button class="btn btn-info">Filtrar</button>
+                </a>
+
+            </div>
+
+            <div class="col-sm">
+                <input type="text" name="busca" id="busca" required>
+
+                <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
+
+                <a href="/voos">
+                    <button class="btn btn-secondary"> Limpar </button>
+                </a> 
+
+                <a href="/voos/cadastro">
+                    <button class="btn btn-info"> Cadastrar</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    
     <br><br>
 
 
    
-    <input type="text" name="busca" id="busca" required>
-
-    <button type="submit" id="send-busca"> Enviar</button>
-
-    <a href="/voos">
-        <button> Limpar </button>
-    </a> <br>
-
     
-    
-    
-    
-    <a href="/voos/cadastro">
-        <button> Cadastrar</button>
-    </a>
 
-    <div id="resultados">
-        <table id="table-voos">
-        
-                <tr>
-                    <td>ID</td>
-                    <td>Data de saída</td>
-                    <td>Numero Rota</td>
-                    <td>CD_ARNV</td>
-                    
-                </tr>
+    <div id="resultados" class="container" style="width: 80%;">
+        <table id="table-voos" class="table">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Data de saída</th>
+                        <th>Numero Rota</th>
+                        <th>CD_ARNV</th>
+                        <th>Editar</th>
+                    </tr>
+                </thead>
+                
 
 
             
@@ -61,7 +77,7 @@
                         
                         <td> 
                             <a href="/voos/editar/<%=voos[i].NR_VOO %>_<%=voos[i].DT_SAIDA_VOO.split('/') %>">
-                                <button type="button"> Editar</button></td>
+                                <button type="button" class="btn btn-info"> Editar</button></td>
                             </a>
                             
                     </tr>

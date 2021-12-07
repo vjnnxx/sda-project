@@ -7,6 +7,7 @@ var consign = require('consign');
 
 var app = express();
 
+app.use(express.static('./app/public'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 

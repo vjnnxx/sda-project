@@ -1,0 +1,23 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+table{
+    width: 700px; 
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+div{
+    width: 170px;
+    height: 140px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px; 
+    background-color: #CCCCCC;
+
+    padding-top: 10%;
+    justify-content: center;
+    text-align: center;
+}

@@ -4,42 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Reserva - Cadastro</title>
 </head>
 <body>
-    <h1>Cadastro Reserva</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
+        <img src="/img/logo.png" />           
+    </nav>
+    
 
     
-        <label>Código passageiro</label>
-		<input type="number" id="cd_psgr" name="cd_psgr" value="" required/>
-    </br></br>
+    <div class="container">
+        <h1>Cadastro Reserva</h1>
+        <div class="form-group">
+            <label for="cd_psgr">Código passageiro</label>
+		    <input type="number" id="cd_psgr" name="cd_psgr" class="form-control form-control-md" value="" min="1" required/>
+        </div>
 
+        <div class="form-group">
+            <label for="cod_voo">Cod. Voo</label>
 
-
-    <label for="cod_voo">Cod. Voo</label>
-
-        <select name="cod_voo" id="cod_voo">
+        <select name="cod_voo" id="cod_voo" class="form-control form-control-md">
             <% for(var i=0;i< voos.length;i++){ %>
                 <option value="<%=  voos[i].NR_VOO %>"><%= voos[i].NR_VOO %> - <%= voos[i].DT_SAIDA_VOO %> </option>
                 
             <% } %>
         </select>
-    </br></br>
+        </div>
+
+        <div class="form-group">
+            <div id="div-data">
 
 
-    <div id="div-data">
+            </div>
+        </div>
 
+        <div class="form-group">
+            <label>Desconto passagem</label>
+		    <input type="number" id="desc_passagem" name="desc_passagem" value="" min="0" max="100"  class="form-control form-control-md" required/>
+        </div>
 
+        <div class="fomr-group">
+            <button id="enviar" class="btn btn-primary" disabled> Enviar</button>
+        </div>
     </div>
-
-        <label>Desconto passagem</label>
-		<input type="number" id="desc_passagem" name="desc_passagem" value="" min="0" max="100" required/>
-    </br></br>
 
 
        
 
-    <button id="enviar" disabled> Enviar</button>
+    
     
 </body>
 <script>
@@ -56,7 +71,7 @@
                 success: response =>{
 
                     const select = document.createElement('select');
-                    select.className = '.datas-saida'
+                    select.className = 'datas-saida form-control form-control-md';
                     select.id = 'select-data-saida'
                     const div = document.getElementById('div-data');
 

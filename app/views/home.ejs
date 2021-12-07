@@ -4,29 +4,113 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/home.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
     <title>Home</title>
 </head>
 <body>
-
-    <h1> Home</h1>
-
-    <ul>
-        <li> <a href="/passageiros"> Passageiros</a> </li>
-        <li> <a href="/voos"> Voos</a> </li>
-        <li> <a href="/reservas"> Reservas</a> </li>
-        <li> <a href="/rotas"> Rotas de voo</a> </li>
-        <li> <a href="/equipamentos"> Equipamentos </a> </li>
-
-        <li> <a href="/aeronaves"> Aeronaves</a> </li>
-        <li> <a href="/companhias"> Companhias aéreas</a> </li>
-        <li> <a href="/aeroportos"> Aeroportos</a> </li>
-        <li> <a href="/paises"> Países</a> </li>
-        <li> <a href="/uf"> UF</a> </li>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         
-    </ul>
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>  
+        <img src="/img/logo.png" />      
+    </nav>
+    
+    <table>
+        <tr>
+            <td>
+                <a href="/passageiros">
+                    <div>
+                        <img src="/img/passageiros.png" /><br>
+                        <h5 style="color: black;">Passageiros</h5>
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a href="/voos">
+                    <div>
+                        <img src="/img/voos.png" /><br>
+                        <h5 style="color: black;"> Voos</h5>
+                    </div>
+                </a> 
+            </td>
+            <td>
+                <a href="/reservas">
+                    <div>
+                        <img src="/img/reservas.png" /><br>
+                        <h5 style="color: black;"> Reservas</h5>
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a href="/rotas">
+                    <div>
+                        <img src="/img/rotas.png" /><br>
+                        <h5 style="color: black;">Rotas de voo</h5> 
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a href="/equipamentos">
+                    <div>
+                        <img src="/img/equipamentos.png" /> <br>
+                        <h5 style="color: black;"> Equipamentos </h5>
+                    </div>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/aeronaves">
+                    <div>
+                        <img src="/img/aeronaves.png" /> <br>
+                        <h5 style="color: black;">Aeronaves</h5>
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a href="/companhias">
+                    <div>
+                        <img src="/img/companhias.png" /> <br>
+                        <h5 style="color: black;">Companhias aéreas</h5>
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a href="/aeroportos">
+                    <div>
+                        <img src="/img/aeroportos.png" /> <br>
+                        <h5 style="color: black;">Aeroportos</h5>
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a href="/paises">
+                    <div>
+                        <img src="/img/paises.png" /> <br>
+                        <h5 style="color: black;">Países</h5>
+                    </div>
+        
+                </a>
+            </td>
+            <td>
+                <a href="/uf">
+                    <div>
+                        <img src="/img/ufs.png" />
+                        <h5 style="color: black;"> UF</h5>
+                    </div>
+        
+                </a>
+            </td>
+        </tr>
+        
+    </table>
 
-    <div id="message">
+  
+
+   <!-- <div id="message">
         <h4> <%= message %></h4>
-    </div>
+    </div> -->
 </body>
 </html>
