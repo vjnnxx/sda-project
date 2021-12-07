@@ -109,10 +109,55 @@ module.exports=function(app){
 
         let busca = req.query.busca;
 
+        const tipo = req.query.tipo == null ? '' : req.query.tipo;
+        const nome = req.query.nome == null ? '' : req.query.nome;
+        const quant = req.query.quant == null ? '' : req.query.quant;
         //console.log(req.query)
-        
-        sql = `SELECT * FROM itr_eqpt WHERE CD_EQPT LIKE '%` + busca + `%' ;` ;
 
+        let sql;
+
+        if(quant == ''){
+            sql = `SELECT * FROM itr_eqpt WHERE NM_EQPT LIKE '%` + nome +  `%' AND  DC_TIPO_EQPT LIKE '%` + tipo + `%' AND CD_EQPT LIKE '%` + busca + `%';`;  
+        } else {
+            sql = `SELECT * FROM itr_eqpt WHERE NM_EQPT LIKE '%` + nome +  `%' AND  DC_TIPO_EQPT LIKE '%` + tipo + `%'  AND QT_PSGR =` + quant + ` AND CD_EQPT LIKE '%` + busca + `%';`;  
+        }
+        
+        //sql = `SELECT * FROM itr_eqpt WHERE CD_EQPT LIKE '%` + busca + `%' ;` ;
+
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            //res.render('lista/passageiros', {passageiros: resultados});
+           
+            res.send(resultados);
+
+        });
+
+    });
+    
+    app.get('/equipamentos/filtro', function (req, res){
+
+        const tipo = req.query.tipo == null ? '' : req.query.tipo;
+        const nome = req.query.nome == null ? '' : req.query.nome;
+        const quant = req.query.quant == null ? '' : req.query.quant;
+
+        const busca = req.query.busca == null ? '' : req.query.busca;
+
+        let sql;
+
+        
+        if(quant == ''){
+            sql = `SELECT * FROM itr_eqpt WHERE NM_EQPT LIKE '%` + nome +  `%' AND  DC_TIPO_EQPT LIKE '%` + tipo + `%' AND CD_EQPT LIKE '%` + busca + `%';`;  
+        } else {
+            sql = `SELECT * FROM itr_eqpt WHERE NM_EQPT LIKE '%` + nome +  `%' AND  DC_TIPO_EQPT LIKE '%` + tipo + `%'  AND QT_PSGR =` + quant + ` AND CD_EQPT LIKE '%` + busca + `%';`;  
+        }
+        console.log(sql)
         var resultados = [];
 
         con.query(sql, (err, result)=>{

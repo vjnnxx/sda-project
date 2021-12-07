@@ -150,4 +150,25 @@ module.exports=function(app){
 
     });
 
+     app.get('/rotas/filtro', function (req, res){
+
+        let sql = `SELECT * FROM ((itr_rota_voo INNER JOIN itr_voo ON itr_rota_voo.NR_ROTA_VOO = itr_voo.NR_ROTA_VOO )INNER JOIN itr_resv ON itr_voo.NR_VOO = itr_resv.NR_VOO); `
+
+        //let sql = `SELECT * FROM itr_voo INNER JOIN itr_resv ON itr_voo.NR_VOO = itr_resv.NR_VOO;` ;
+
+        //let sql2 = `SELECT * FROM itr_rota_voo INNER JOIN itr_voo ON itr_rota_voo.NR_ROTA_VOO = itr_voo.NR_ROTA_VOO ;`;
+        con.query(sql, (err, result)=>{
+            if (err) throw err;
+            
+            
+            for (x in result){
+                resultados.push(result[x]);
+            }
+                //res.render('lista/passageiros', {passageiros: resultados});
+            
+                res.send(resultados);
+
+        });
+    });
+
 }

@@ -22,7 +22,7 @@ module.exports=function(app){
 
             for (x in result){
             
-                paises.push({nome: result[x].NM_PAIS});
+                paises.push(result[x]);
             }
             
             
@@ -150,9 +150,11 @@ module.exports=function(app){
 
         let busca = req.query.busca;
 
+        let filtro = req.query.filtro;
+
         //console.log(req.query)
         
-        sql = `SELECT * FROM itr_cmpn_aerea WHERE NM_CMPN_AEREA LIKE '%` + busca + `%' ;` ;
+        let sql = `SELECT * FROM itr_cmpn_aerea WHERE CD_PAIS LIKE '%` + filtro +  `%' AND  NM_CMPN_AEREA LIKE '%` + busca + `%' ;`;
 
         var resultados = [];
 
@@ -174,6 +176,7 @@ module.exports=function(app){
     app.get('/companhias/verificarId', function(req, res){
 
         let cod = req.query.cod;
+
         
         let sql = 'SELECT * FROM itr_cmpn_aerea WHERE CD_CMPN_AEREA = ' + mysql.escape(cod) + ';';
 
@@ -186,5 +189,30 @@ module.exports=function(app){
                 res.status(500).send({ error: 'something blew up' })
             }
         });
+    });
+
+    app.get('/companhias/filtro/:id', function (req, res){
+
+        const id = req.params.id;
+
+        const busca = req.query.busca == null ? '' : req.query.busca;
+
+        let sql = `SELECT * FROM itr_cmpn_aerea WHERE CD_PAIS LIKE '%` + id +  `%' AND  NM_CMPN_AEREA LIKE '%` + busca + `%' ;`;
+        
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            //res.render('lista/passageiros', {passageiros: resultados});
+           
+            res.send(resultados);
+
+        });
+
     });
 };

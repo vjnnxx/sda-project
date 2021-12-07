@@ -8,11 +8,13 @@ const con = mysql.createConnection({
     database: "sda"
   });
 
-module.exports=function(app){
+module.exports = function(app){
     //Aeronaves
     app.get('/aeronaves', function (req, res){
 
         let sql = 'SELECT * FROM itr_arnv;';
+
+        var companhias = [];
         
         let resultados = [];
         con.query(sql, (err, result)=>{
@@ -21,8 +23,18 @@ module.exports=function(app){
             for (x in result){
                 resultados.push(result[x]);
             }
+
+            let sql2 = 'SELECT * FROM itr_cmpn_aerea;';
+            con.query(sql2, (err, result)=>{
+                if (err) throw err;   
+                for(x in result){
+                    companhias.push(result[x]);
+                }
+
+                res.render('lista/aeronaves', {aeronaves: resultados, companhias: companhias});
+            });
             
-            res.render('lista/aeronaves', {aeronaves: resultados});
+            
         })
 
     });
@@ -157,8 +169,10 @@ module.exports=function(app){
         let busca = req.query.busca;
 
         //console.log(req.query)
+        let filtro = req.query.filtro;
         
-        sql = `SELECT * FROM itr_arnv WHERE CD_ARNV LIKE '%` + busca + `%' ;` ;
+        
+        let sql = `SELECT * FROM itr_arnv WHERE CD_CMPN_AEREA LIKE '%` + filtro +  `%' AND  CD_ARNV LIKE '%` + busca + `%' ;`;
 
         var resultados = [];
 
@@ -192,5 +206,30 @@ module.exports=function(app){
                 res.status(500).send({ error: 'something blew up' })
             }
         });
+    });
+
+    app.get('/aeronaves/filtro/:id', function (req, res){
+
+        const id = req.params.id;
+
+        const busca = req.query.busca == null ? '' : req.query.busca;
+
+        let sql = `SELECT * FROM itr_arnv WHERE CD_CMPN_AEREA LIKE '%` + id +  `%' AND  CD_ARNV LIKE '%` + busca + `%' ;`;
+        
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            //res.render('lista/passageiros', {passageiros: resultados});
+           
+            res.send(resultados);
+
+        });
+
     });
 };

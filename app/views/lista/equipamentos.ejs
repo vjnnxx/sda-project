@@ -15,21 +15,20 @@
     <label for="tipo">Tipo:</label>
 
         <select name="tipo" id="tipo">
-                <option value="nenhum">Nenhum</option>
-                <% for(var i=0;i< equipamentos.length;i++){ %>
-                    
-                        <option value="<%= equipamentos[i].DC_TIPO_EQPT %>"><%= equipamentos[i].DC_TIPO_EQPT %></option>
+                <option value="">Nenhum</option>
+                <option value="JATO">JATO</option>
+                <option value="HELICOPTERO">HELICOPTERO</option>
+                <option value="TURBO HELICE">TURBO HELICE</option>
+                
                         
-                    
-                <% } %>
-
+                
             </select>
     </br></br>
 
     <label for="nome">Nome:</label>
             
             <select name="nome" id="nome">
-                <option value="nenhum">Nenhum</option>
+                <option value="">Nenhum</option>
                 <% for(var i=0;i< equipamentos.length;i++){ %>
                     <option value="<%= equipamentos[i].NM_EQPT %>"><%= equipamentos[i].NM_EQPT %></option>
                 <% } %>
@@ -40,7 +39,7 @@
     <label for="quant">Quant. passageiro:</label>
             
             <select name="quant" id="quant">
-                <option value="nenhum">Nenhum</option>
+                <option value="">Nenhum</option>
                 <% for(var i=0;i< equipamentos.length;i++){ %>
                     <option value="<%= equipamentos[i].QT_PSGR %>"><%= equipamentos[i].QT_PSGR %></option>
                 <% } %>
@@ -107,14 +106,22 @@
         
         
         $('#send-busca').click(function(){
-           
+            const tipo = $('#tipo').val();
+
+            const nome = $('#nome').val();
+
+            const quant = $('#quant').val();
             const busca = $('#busca').val();
 
             if(busca){
                 $.ajax({
                     url: '/equipamentos/busca' ,
                     method: 'GET',
-                    data: {busca: busca},
+                    data: {busca: busca,
+                        nome: nome,
+                        quant:quant,
+                        tipo: tipo,
+                    },
                     success: response =>{
                         //console.log(response);
 
@@ -181,7 +188,261 @@
             }
         });
 
+        $('#tipo').change(function(){
+            
+            const tipo = $('#tipo').val();
 
+            const nome = $('#nome').val();
+
+            const quant = $('#quant').val();
+            
+            const busca = $('#busca').val();
+
+            $.ajax({
+                url: '/equipamentos/filtro/',
+                method: 'GET',
+                data: {
+                    busca: busca,
+                    nome: nome,
+                    quant:quant,
+                    tipo: tipo,
+
+                },
+                success: response =>{
+                        //console.log(response);
+
+                        const equipamentos = response;
+                             
+                        $('tr').remove(".resultado-equipamentos");
+
+                        const table = document.getElementById('table-equipamentos');
+
+                        equipamentos.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-equipamentos";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.CD_EQPT;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.NM_EQPT;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.DC_TIPO_EQPT;
+
+                            var td4 = document.createElement('td');
+                            td4.innerHTML = element.QT_MOTOR ;
+
+                            var td5 = document.createElement('td');
+                            td5.innerHTML = element.IC_TIPO_PRPS ;
+
+                            var td6 = document.createElement('td');
+                            element.QT_PSGR == undefined ? td6.innerHTML = '' : td6.innerHTML = element.QT_PSGR ;
+
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/equipamentos/editar/' + element.CD_EQPT;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+                            tr.appendChild(td5);
+                            tr.appendChild(td6);
+
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                        
+                        
+                    },
+                
+            });
+        });
+        $('#nome').change(function(){
+            
+            const tipo = $('#tipo').val();
+
+            const nome = $('#nome').val();
+
+            const quant = $('#quant').val();
+            
+            const busca = $('#busca').val();
+
+            $.ajax({
+                url: '/equipamentos/filtro/',
+                method: 'GET',
+                data: {
+                    busca: busca,
+                    nome: nome,
+                    quant:quant,
+                    tipo: tipo,
+
+                },
+                success: response =>{
+                        console.log(response);
+
+                        const equipamentos = response;
+                             
+                        $('tr').remove(".resultado-equipamentos");
+
+                        const table = document.getElementById('table-equipamentos');
+
+                        equipamentos.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-equipamentos";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.CD_EQPT;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.NM_EQPT;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.DC_TIPO_EQPT;
+
+                            var td4 = document.createElement('td');
+                            td4.innerHTML = element.QT_MOTOR ;
+
+                            var td5 = document.createElement('td');
+                            td5.innerHTML = element.IC_TIPO_PRPS ;
+
+                            var td6 = document.createElement('td');
+                            element.QT_PSGR == undefined ? td6.innerHTML = '' : td6.innerHTML = element.QT_PSGR ;
+
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/equipamentos/editar/' + element.CD_EQPT;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+                            tr.appendChild(td5);
+                            tr.appendChild(td6);
+
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                        
+                        
+                    },
+                
+            });
+        });
+        $('#quant').change(function(){
+            
+            const tipo = $('#tipo').val();
+
+            const nome = $('#nome').val();
+
+            const quant = $('#quant').val();
+            
+            const busca = $('#busca').val();
+
+            $.ajax({
+                url: '/equipamentos/filtro/',
+                method: 'GET',
+                data: {
+                    busca: busca,
+                    nome: nome,
+                    quant:quant,
+                    tipo: tipo,
+
+                },
+                success: response =>{
+                        //console.log(response);
+
+                        const equipamentos = response;
+                             
+                        $('tr').remove(".resultado-equipamentos");
+
+                        const table = document.getElementById('table-equipamentos');
+
+                        equipamentos.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-equipamentos";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.CD_EQPT;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.NM_EQPT;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.DC_TIPO_EQPT;
+
+                            var td4 = document.createElement('td');
+                            td4.innerHTML = element.QT_MOTOR ;
+
+                            var td5 = document.createElement('td');
+                            td5.innerHTML = element.IC_TIPO_PRPS ;
+
+                            var td6 = document.createElement('td');
+                            element.QT_PSGR == undefined ? td6.innerHTML = '' : td6.innerHTML = element.QT_PSGR ;
+
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/equipamentos/editar/' + element.CD_EQPT;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+                            tr.appendChild(td5);
+                            tr.appendChild(td6);
+
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                        
+                        
+                    },
+                
+            });
+        });
         
     });
 </script>

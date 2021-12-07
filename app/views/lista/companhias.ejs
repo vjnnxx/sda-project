@@ -12,13 +12,13 @@
 
     <h2>Filtros</h2>
     
-    <label for="nome">País:</label>
+    <label for="pais-filtro">País:</label>
 
-        <select name="nome" id="nome">
-                <option value="nenhum">Nenhum</option>
+        <select name="pais-filtro" id="pais-filtro">
+                <option value="">Nenhum</option>
                 <% for(var i=0;i< paises.length;i++){ %>
                     
-                        <option value="<%= paises[i].nome %>"><%= paises[i].nome %></option>
+                        <option value="<%= paises[i].CD_PAIS %>"><%= paises[i].NM_PAIS %></option>
                         
                     
                 <% } %>
@@ -77,6 +77,8 @@
         
         
         $('#send-busca').click(function(){
+
+            const pais = $('#pais-filtro').val();
            
             const busca = $('#busca').val();
 
@@ -84,7 +86,7 @@
                 $.ajax({
                     url: '/companhias/busca' ,
                     method: 'GET',
-                    data: {busca: busca},
+                    data: {busca: busca, filtro: pais},
                     success: response =>{
                         //console.log(response);
 
@@ -139,6 +141,74 @@
                     },
                 });
             }
+        });
+
+        $('#pais-filtro').change(function(){
+            
+            const pais = $('#pais-filtro').val();
+            
+            const busca = $('#busca').val();
+
+            $.ajax({
+                url: '/companhias/filtro/' + pais,
+                method: 'GET',
+                data: {
+                    busca: busca,
+                },
+                success: response =>{
+                        //console.log(response);
+
+                        const companhias = response;
+                             
+                        $('tr').remove(".resultado-companhias");
+
+                        const table = document.getElementById('table-companhias');
+
+                        companhias.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-companhias";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.CD_CMPN_AEREA;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.NM_CMPN_AEREA;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.CD_PAIS;
+
+                        
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/companhias/editar/' + element.CD_CMPN_AEREA;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+
+
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                        
+                        
+                    },
+                
+            });
         });
 
     
