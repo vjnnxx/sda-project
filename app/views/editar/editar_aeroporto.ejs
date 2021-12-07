@@ -4,52 +4,60 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Aeroporto - Editar</title>
 </head>
 <body>
-    <h1>Atualizar Aeroporto</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>        
+    </nav>
+
+    <div class="container"> 
+        <h1>Atualizar Aeroporto</h1>
 
 
-    <form action="/aeroportos/editar/atualizar/<%= aeroporto[0].CD_ARPT %>" method="post">
+        <form action="/aeroportos/editar/atualizar/<%= aeroporto[0].CD_ARPT %>" method="post">
+            <div class="form-group">
+                <label for="cod_aeroporto">Código do Aeroporto</label>
 
-        <label for="cod_aeroporto">Código do Aeroporto</label>
+                <input type="text" name="cod_aeroporto" id="cod_aeroporto" maxlength="3" value=" <%= aeroporto[0].CD_ARPT %>" class="form-control form-control-md" readonly>
+            </div>
+            <div class="form-group">
+                <label for="nome_cidade">Nome da cidade</label>
 
-                <input type="text" name="cod_aeroporto" id="cod_aeroporto" maxlength="3" value=" <%= aeroporto[0].CD_ARPT %>" readonly>
-        </br></br>
+                <input type="text" name="nome_cidade" id="nome_cidade" value=" <%= aeroporto[0].NM_CIDADE %>" class="form-control form-control-md">
+            </div>
+            <div class="form-group">
+                <label for="sigla_uf">Sigla UF</label>
+                
+                <select name="sigla_uf" id="sigla_uf" class="form-control form-control-md">
+                    <option value="">Nenhum</option>
+                    <% for(var i=0;i< ufs.length;i++){ %>
+                        <option value="<%= ufs[i].SG_UF %>"><%= ufs[i].SG_UF %></option>
+                    <% } %>
 
-        <label for="nome_cidade">Nome da cidade</label>
+                </select>      
+            </div>
+            <div class="form-group">
+                <label for="cod_pais">Cod. País</label>
 
-                <input type="text" name="nome_cidade" id="nome_cidade" value=" <%= aeroporto[0].NM_CIDADE %>">
-        </br></br>
+                <select name="cod_pais" id="cod_pais" class="form-control form-control-md">
+                    <% for(var i=0;i< paises.length;i++){ %>
+                        <option value="<%= paises[i].CD_PAIS %>"><%= paises[i].CD_PAIS %></option>
+                    <% } %>
 
-        <label for="sigla_uf">Sigla UF</label>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-success">
+            </div>
             
-            <select name="sigla_uf" id="sigla_uf">
-                <option value="">Nenhum</option>
-                <% for(var i=0;i< ufs.length;i++){ %>
-                    <option value="<%= ufs[i].SG_UF %>"><%= ufs[i].SG_UF %></option>
-                <% } %>
+        </form> <br>
 
-            </select>         
+        <button id="deletar" class="btn btn-danger">Deletar</button>
+    </div>
 
-        </br></br>
-
-        <label for="cod_pais">Cod. País</label>
-
-            <select name="cod_pais" id="cod_pais">
-                <% for(var i=0;i< paises.length;i++){ %>
-                    <option value="<%= paises[i].CD_PAIS %>"><%= paises[i].CD_PAIS %></option>
-                <% } %>
-
-            </select>
-        </br></br>
-
-
-        <input type="submit" >
-        
-    </form> <br>
-
-    <button id="deletar">Deletar</button>
+   
 </body>
 <script>
     $(document).ready(function(){

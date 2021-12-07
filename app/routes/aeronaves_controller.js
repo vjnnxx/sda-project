@@ -130,7 +130,7 @@ module.exports = function(app){
 
         const data = req.body;
 
-        console.log(data);
+        
 
         let sql = 'UPDATE itr_arnv SET CD_EQPT =' + mysql.escape(data.equipamento) + ', CD_CMPN_AEREA =' + mysql.escape(data.companhia) + ' WHERE CD_ARNV =' + mysql.escape(id) + ';';
 

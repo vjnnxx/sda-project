@@ -117,7 +117,7 @@ module.exports=function(app){
 
         const cad = req.body;
 
-        console.log(cad)
+        
         let sql = 'UPDATE itr_cmpn_aerea SET NM_CMPN_AEREA = ' + mysql.escape(cad.nome) + ', CD_PAIS = ' + mysql.escape(cad.cod_pais) +  'WHERE CD_CMPN_AEREA = ' + mysql.escape(id) + ';';
 
         con.query(sql, (err, result)=>{

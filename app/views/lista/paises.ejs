@@ -4,34 +4,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Países</title>
 </head>
 <body>
 
-    <a href="/"> Home</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a> 
+        <img src="/img/logo.png" />             
+    </nav>
+
     <h1>Países</h1>
 
-        <input type="text" name="busca" id="busca">
-
-        <button type="submit" id="send-busca"> Enviar</button>
-
-        <a href="/paises">
-            <button>Limpar</button>
-        </a> <br>
-
-        <a href="/paises/cadastro">
-            <button> Cadastrar</button>
-        </a>
-
-        <div id="resultados">
-            <table id="table-paises">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h3> Buscar </h3>
+                <input type="text" name="busca" id="busca">
+    
+                <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
+        
+                <a href="/paises">
+                    <button class="btn btn-secondary">Limpar</button>
+                </a>
+        
+                <a href="/paises/cadastro">
+                    <button class="btn btn-info"> Cadastrar</button>
+                </a>
+            </div>
             
+        </div>
+    </div>
+
+<br>
+        
+
+        <div id="resultados" class="container" style="width: 80%;">
+            <table id="table-paises" class="table table-sm">
+            
+                <thead class="thead-dark">
                     <tr>
-                        <td>Sigla do país</td>
-                        <td>Nome país</td>
-                        <td>Quantidade de população</td>
+                        <th>Sigla do país</th>
+                        <th>Nome país</th>
+                        <th>Quantidade de população</th>
+                        <th>Editar</th>
                         
                     </tr>
+                </thead>
     
     
                 
@@ -44,7 +64,7 @@
                             
                             <td> 
                                 <a href="/paises/editar/<%= paises[i].CD_PAIS %>">
-                                    <button type="button"> Editar</button></td>
+                                    <button type="button" class="btn btn-info"> Editar</button></td>
                                 </a>
                                 
                         </tr>
@@ -57,9 +77,6 @@
         
    
     
-    <a href="/paises/cadastro">
-        <button> Cadastrar</button>
-    </a>
     
 </body>
 <script>
@@ -104,6 +121,7 @@
 
                            var button = document.createElement('button');
                            button.innerHTML = 'Editar';
+                           button.className = 'btn btn-info';
 
                            a.appendChild(button);
 

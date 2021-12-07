@@ -4,49 +4,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Companhias aéreas</title>
 </head>
 <body>
-    <a href="/"> Home</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
+        <img src="/img/logo.png" />           
+    </nav>
     <h1>Companhias aéreas</h1>
 
-    <h2>Filtros</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h2>Filtros</h2>
     
-    <label for="pais-filtro">País:</label>
+                <label for="pais-filtro">País:</label>
 
-        <select name="pais-filtro" id="pais-filtro">
+                <select name="pais-filtro" id="pais-filtro">
                 <option value="">Nenhum</option>
                 <% for(var i=0;i< paises.length;i++){ %>
                     
-                        <option value="<%= paises[i].CD_PAIS %>"><%= paises[i].NM_PAIS %></option>
+                    <option value="<%= paises[i].CD_PAIS %>"><%= paises[i].NM_PAIS %></option>
                         
                     
                 <% } %>
 
-            </select>
-    </br></br>
+                </select>
+            </div>
 
-    <input type="text" name="busca" id="busca" required>
+            <div class="col-sm">
+                <h3>Buscar</h3>
+                <input type="text" name="busca" id="busca"  required>
 
-    <button type="submit" id="send-busca"> Enviar</button>
+                <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
 
-    <a href="/companhias">
-        <button> Limpar </button>
-    </a> <br>
+                <a href="/companhias">
+                    <button class="btn btn-secondary"> Limpar </button>
+                </a> 
 
-    <a href="/companhias/cadastro">
-        <button> Cadastrar</button>
-    </a>
+                <a href="/companhias/cadastro">
+                    <button class="btn btn-info" > Cadastrar</button>
+                </a>
+            </div>
+        </div>
+    </div>
     
-    <div id="resultados">
-        <table id="table-companhias">
-        
-                <tr>
-                    <td>CD_CMPN_AEREA</td>
-                    <td>NM_CMPN_AEREA</td>
-                    <td>CD_PAIS</td>
-                    
-                </tr>
+
+    
+    
+    <div id="resultados" class="container" style="margin-top: 10px;">
+        <table id="table-companhias" class="table table-sm">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>CD_CMPN_AEREA</th>
+                        <th>NM_CMPN_AEREA</th>
+                        <th>CD_PAIS</th>
+                        <th>Editar</th>
+                        
+                    </tr>
+                </thead>
+                
 
 
             
@@ -59,7 +79,7 @@
                         
                         <td> 
                             <a href="/companhias/editar/<%=companhias[i].CD_CMPN_AEREA %>">
-                                <button type="button"> Editar</button></td>
+                                <button type="button" class="btn btn-info"> Editar</button></td>
                             </a>
                             
                     </tr>
@@ -118,6 +138,7 @@
                             a.href = '/companhias/editar/' + element.CD_CMPN_AEREA;
 
                             var button = document.createElement('button');
+                            button.className = 'btn btn-info';
                             button.innerHTML = 'Editar';
 
                             a.appendChild(button);

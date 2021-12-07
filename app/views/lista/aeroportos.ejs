@@ -4,34 +4,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Aeroportos</title>
 </head>
 <body>
-    <a href="/"> Home</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a> 
+        <img src="/img/logo.png" />             
+    </nav>
+
+
+
     <h1>Aeroportos</h1>
 
-    <input type="text" name="busca" id="busca" required>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h3> Buscar </h3>
+                <input type="text" name="busca" id="busca" required>
 
-    <button type="submit" id="send-busca"> Enviar</button>
+                <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
+            
+                <a href="/aeroportos">
+                    <button  class="btn btn-secondary"> Limpar </button>
+                </a>
+            
+                <a href="/aeroportos/cadastro">
+                    <button  class="btn btn-info"> Cadastrar</button>
+                </a>
+            </div>
+        </div>
+    </div>
 
-    <a href="/aeroportos">
-        <button> Limpar </button>
-    </a> <br>
+    <br>
 
-    <a href="/aeroportos/cadastro">
-        <button> Cadastrar</button>
-    </a>
-
-    <div id="resultados">
-        <table id="table-aeroportos">
+    <div id="resultados" class="container" style="width: 80%;">
+        <table id="table-aeroportos" class="table table-sm">
         
+            <thead class="thead-dark">
                 <tr>
-                    <td>CD_ARPT</td>
-                    <td>CD_PAIS</td>
-                    <td>SG_UF</td>
-                    <td>NM_CIDADE</td>
+                    <th>Código Aeroporto</th>
+                    <th>Código País</th>
+                    <th>Sigla UF</th>
+                    <th>Nome da cidade</th>
+                    <th>Editar</th>
                     
                 </tr>
+            </thead>
 
 
             
@@ -45,7 +65,7 @@
                         
                         <td> 
                             <a href="/aeroportos/editar/<%=aeroportos[i].CD_ARPT %>">
-                                <button type="button"> Editar</button></td>
+                                <button type="button" class="btn btn-info"> Editar</button></td>
                             </a>
                             
                     </tr>
@@ -105,6 +125,7 @@
 
                             var button = document.createElement('button');
                             button.innerHTML = 'Editar';
+                            button.className = 'btn btn-info';
 
                             a.appendChild(button);
 

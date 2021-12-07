@@ -4,43 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Aeronave - Cadastro</title>
 </head>
 <body>
-    <h1>Cadastro Aeronave</h1>
 
-
-    <form action="/aeronaves/cadastrar" method="post">
-
-
-        <label>Código Aeronave</label>
-
-        <input type="text" id="cod_aeronave" name="cod_aeronave" maxlength="5" > <br> <br>
-
-        <label>Cod. Equipamento</label>
-
-        <select name="equipamento" id="equipamento">
-            <% for(var i=0;i< equipamentos.length;i++){ %>
-                <option value="<%= equipamentos[i].CD_EQPT %>"><%= equipamentos[i].CD_EQPT %></option>
-            <% } %>
-
-        </select>
-        </br></br>
-
-        <label >Cod. Companhia</label>
-
-        <select name="companhia" id="companhia">
-            <% for(var i=0;i< companhias.length;i++){ %>
-                <option value="<%= companhias[i].CD_CMPN_AEREA %>"><%= companhias[i].CD_CMPN_AEREA %></option>
-            <% } %>
-
-        </select>
-        </br></br>
-
-
-        <input type="submit" id="enviar" disabled>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         
-    </form>
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
+        <img src="/img/logo.png" />           
+    </nav>
+
+    
+
+    <div class="container">
+        <h1>Cadastro Aeronave</h1>
+        <form action="/aeronaves/cadastrar" method="post">
+
+            <div class="form-group">
+                <label>Código Aeronave</label>
+
+                <input type="text" id="cod_aeronave" class="form-control form-control-md" name="cod_aeronave" maxlength="5" >
+            </div>
+
+            <div class="form-group">
+                <label>Cod. Equipamento</label>
+
+                <select name="equipamento" id="equipamento" class="form-control form-control-md">
+                    <% for(var i=0;i< equipamentos.length;i++){ %>
+                        <option value="<%= equipamentos[i].CD_EQPT %>"><%= equipamentos[i].CD_EQPT %></option>
+                    <% } %>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label >Cod. Companhia</label>
+
+                <select name="companhia" id="companhia" class="form-control form-control-md">
+                    <% for(var i=0;i< companhias.length;i++){ %>
+                        <option value="<%= companhias[i].CD_CMPN_AEREA %>"><%= companhias[i].CD_CMPN_AEREA %></option>
+                    <% } %>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" id="enviar" class="btn btn-success" disabled>
+            </div>
+        </form>
+    </div>
+    
 </body>
 
 <script>

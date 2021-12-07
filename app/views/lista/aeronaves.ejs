@@ -4,47 +4,71 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Aeronaves</title>
 </head>
 <body>
-    <a href="/"> Home</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
+        <img src="/img/logo.png" />           
+    </nav>
     <h1>Aeronaves</h1>
 
-    <h2>Filtros</h2>
-    <h3>Companhias aéreas</h3>
-    <label for="nome">Código:</label>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h2>Filtros</h2>
+                <h3>Companhias aéreas</h3>
+                <label for="nome">Código:</label>
+                <select name="companhia" id="companhia">
+                    <option value="">Nenhum</option>
+                    <% for(var i=0;i< companhias.length;i++){ %>
+                        <option value="<%= companhias[i].CD_CMPN_AEREA %>"><%= companhias[i].CD_CMPN_AEREA %></option>
+                    <% } %>
+            
+                </select>
+            </div>
 
-    <select name="companhia" id="companhia">
-        <option value="">Nenhum</option>
-        <% for(var i=0;i< companhias.length;i++){ %>
-            <option value="<%= companhias[i].CD_CMPN_AEREA %>"><%= companhias[i].CD_CMPN_AEREA %></option>
-        <% } %>
+            <div class="col-sm">
+                <h3>Buscar</h3>
+                <input type="text" name="busca" id="busca" required>
 
-    </select>
-    </br></br>
+                <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
 
-    <input type="text" name="busca" id="busca" required>
-
-    <button type="submit" id="send-busca"> Enviar</button>
-
-    <a href="/aeronaves">
-        <button> Limpar </button>
-    </a> <br>
+                <a href="/aeronaves">
+                    <button class="btn btn-secondary"> Limpar </button>
+                </a> 
 
 
-    <a href="/aeronaves/cadastro">
-        <button> Cadastrar</button>
-    </a>
+                <a href="/aeronaves/cadastro">
+                    <button class="btn btn-info"> Cadastrar</button>
+                </a>
+            </div>
+        </div>
+    </div>
 
-    <div id="resultados">
-        <table id="table-aeronaves">
-        
-                <tr>
-                    <td>CD_ARNV</td>
-                    <td>CD_EQPT</td>
-                    <td>CD_CMPN_AEREA</td>
+    
+
+
+    
+    
+
+    
+
+    <div id="resultados" class="container">
+        <table id="table-aeronaves" class="table table-sm">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>CD_ARNV</th>
+                        <th>CD_EQPT</th>
+                        <th>CD_CMPN_AEREA</th>
+                        <th>Editar</th>
+                    </tr> 
                     
-                </tr>
+                </thead>
+                
 
 
             
@@ -57,7 +81,7 @@
                         
                         <td> 
                             <a href="/aeronaves/editar/<%=aeronaves[i].CD_ARNV %>">
-                                <button type="button"> Editar</button></td>
+                                <button type="button" class="btn btn-info"> Editar</button></td>
                             </a>
                             
                     </tr>

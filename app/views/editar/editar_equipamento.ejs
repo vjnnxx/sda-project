@@ -4,58 +4,84 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Equipamento - Editar</title>
 </head>
 <body>
-    <h1>Atualizar Equipamento</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        
+      <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
+      <img src="/img/logo.png" />           
+    </nav>
+    
 
 
-    <form action="/equipamentos/editar/atualizar/<%- equipamento[0].CD_EQPT %>" method="post">
+    <div class="container">
+      <h1>Atualizar Equipamento</h1>
+      <form action="/equipamentos/editar/atualizar/<%- equipamento[0].CD_EQPT %>" method="post">
+      <div class="form-group">
+        <label>Nome</label>
+		  <input type="text" id="nome" name="nome" class="form-control form-control-md" value="<%= equipamento[0].NM_EQPT %>"/>
+      </div>
 
-    <label>Nome</label>
-		<input type="text" id="nome" name="nome" value="<%= equipamento[0].NM_EQPT %>"/>
-    </br></br>
+      <div class="form-group">
+        
+            <label for="tipo_equip">Tipo de equipamento</label>
 
-    <label for="tipo_equip">Tipo de equipamento</label>
-
-            <select name="tipo_equip" id="tipo_equip">
+            <select name="tipo_equip" id="tipo_equip" class="form-control form-control-md">
             <option value="JATO">JATO</option>
             <option value="HELICOPTERO">HELICOPTERO</option>
             <option value="TURBO HELICE">TURBO HELICE</option>
 
             </select>
-    </br></br>
+      </div>
 
+      <div class="form-group">
 
-    <label for="tipo_propulsor">Tipo de propulsor</label>
+        <label for="tipo_propulsor">Tipo de propulsor</label>
 
-            <select name="tipo_propulsor" id="tipo_propulsor">
+          <select name="tipo_propulsor" id="tipo_propulsor" class="form-control form-control-md">
             <option value="R">R</option>
             <option value="M">M</option>
            
 
-            </select>
-    </br></br>
+          </select>
+      </div>
 
-   
-   <label>Quantidade de motores</label>
-   <select name="quant_motor" id="quant_motor">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-    </br></br>
+      <div class="form-group">
+        <label>Quantidade de motores</label>
+        <select name="quant_motor" id="quant_motor" class="form-control form-control-md">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+      </div>
+
+      <div class="form-group">
+        
+        <label>Quantidade passageiros</label>
+		    <input type="text" id="quant_passageiro" class="form-control form-control-md" name="quant_passageiro" value="<%= equipamento[0].QT_PSGR %>"/>
     
-    <label>Quantidade passageiros</label>
-		<input type="text" id="quant_passageiro" name="quant_passageiro" value="<%= equipamento[0].QT_PSGR %>"/>
-    </br></br>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" class="btn btn-success">
+      </div>
+    </form>
+      <div class="form-group">
+        <button id="deletar" class="btn btn-danger">Deletar</button>
+      </div>
+
+    </div>
+
+    
        
 
-    <input type="submit" >
-    <button id="deletar">Deletar</button>
-    </form>
+    
+    
+    
 </body>
 <script>
   $(document).ready(function(){

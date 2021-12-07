@@ -4,39 +4,51 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Companhia - Editar</title>
 </head>
 <body>
-    <h1>Atualizar Companhia aérea</h1>
 
-    <form action="/companhias/editar/atualizar/<%= companhia[0].CD_CMPN_AEREA %>" method="post">
-    
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
+        <img src="/img/logo.png" />           
+    </nav>
 
-        <label>Cod. Companhia Aerea</label>
-        <input type="text" id="cod_companhia" name="cod_companhia" maxlength="2" value="<%= companhia[0].CD_CMPN_AEREA %>" readonly/>
-        </br></br>
-    
-        <label>Nome</label>
-        <input type="text" id="nome" name="nome" value="<%= companhia[0].NM_CMPN_AEREA %>" required/>
-        </br></br>
+    <div class="container">
+        <h1>Atualizar Companhia aérea</h1>
+        <form action="/companhias/editar/atualizar/<%= companhia[0].CD_CMPN_AEREA %>" method="post">
+            <div class="form-group">
+                <label>Cod. Companhia Aerea</label>
+                <input type="text" id="cod_companhia" class="form-control form-control-md" name="cod_companhia" maxlength="2" value="<%= companhia[0].CD_CMPN_AEREA %>" readonly/>   
+            </div>
 
-        <label for="cod_pais">País</label>
+            <div class="form-group">
+               <label> Nome </label>
+            <input type="text" id="nome" name="nome" class="form-control form-control-md" value="<%= companhia[0].NM_CMPN_AEREA %>" required/>
+            </div>
 
-                <select name="cod_pais" id="cod_pais">
+            <div class="form-group">
+                <label for="cod_pais">País</label>
+
+                <select name="cod_pais" id="cod_pais" class="form-control form-control-md">
                     <% for(var i=0;i< paises.length;i++){ %>
                         <option value="<%= paises[i].codigo %>"><%= paises[i].nome %></option>
                     <% } %>
 
                 </select>
-        </br></br>
+            </div>
 
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" >
+            </div>
+        </form>
 
-
-
-        <input type="submit" >
-        
-    </form> <br>
-    <button id="deletar">Deletar</button>
+        <div class="form-group">
+            <button id="deletar" class="btn btn-danger">Deletar</button>
+        </div>
+    </div>
+    
 </body>
 <script>
 

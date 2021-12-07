@@ -4,35 +4,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Companhia - Cadastro</title>
 </head>
 <body>
-    <h1>Cadastro Companhia aérea</h1>
 
-    <form action="/companhias/cadastrar" method="post">
+    
 
-        <label>Cod. Companhia Aerea</label>
-        <input type="text" id="cod_companhia" name="cod_companhia" maxlength="2"/>
-        </br></br>
+    <div class="container">
+        <h1>Cadastro Companhia aérea</h1>
+        <form action="/companhias/cadastrar" method="post">
+        <div class="form-group">
+            <label>Cod. Companhia Aerea</label>
+            <input type="text" id="cod_companhia" class="form-control form-control-md" name="cod_companhia" maxlength="2"/>
+        </div>
+
+        <div class="form-group">
+            <label>Nome</label>
+            <input type="text" id="nome" class="form-control form-control-md" name="nome" value=""/>
+        </div>
+
+        <div class="form-group">
+            <label for="pais">País</label>
+
+            <select name="pais" id="pais" class="form-control form-control-md">
+                <% for(var i=0;i< paises.length;i++){ %>
+                    <option value="<%= paises[i].codigo %>"><%= paises[i].nome %></option>
+                <% } %>
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" id="enviar" class="btn btn-success" disabled >
+        </div>
+    </div>
+    
+
             
-        <label>Nome</label>
-        <input type="text" id="nome" name="nome" value=""/>
+        
         </br></br>
 
-        <label for="pais">País</label>
-
-                <select name="pais" id="pais">
-                    <% for(var i=0;i< paises.length;i++){ %>
-                        <option value="<%= paises[i].codigo %>"><%= paises[i].nome %></option>
-                    <% } %>
-
-                </select>
+        
         </br></br>
 
 
 
 
-        <input type="submit" id="enviar" disabled >
+        
     </form>
 </body>
 <script>

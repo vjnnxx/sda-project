@@ -4,33 +4,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>País - Cadastro</title>
 </head>
 <body>
-    <h1>Cadastro País</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand" href="/"><h1 class="h1"> SDA </h1></a>        
+    </nav>
+
+    <div style="width: 50%;" class="container">
+
+        <h1>Cadastro País</h1>
 
 
-    <form action="/paises/cadastrar" method="post">
+        <form action="/paises/cadastrar" method="post">
+    
+            <div class="form-group">
+                <label for="cod_pais">Código do País</label>
+    
+                <input type="text" name="cod_pais" id="cod_pais" maxlength="2" class="form-control form-control-md">
+            </div>
+    
+            <div class="form-group">
+                <label for="nome_pais">Nome</label>
+    
+                <input type="text" name="nome_pais" id="nome_pais" class="form-control form-control-md">
+            </div>
+            <div class="form-group">
+                <label for="quant_pop">Quant. Populacional</label>
+    
+                <input type="number" name="quant_pop" id="quant_pop" class="form-control form-control-md">
+            </div>
+            <div class="form-group">
+                <input type="submit" id="enviar" class="btn btn-success" disabled>
+            </div>
+           
+            
+        </form>
+    </div>
 
-        <label for="cod_pais">Código do País</label>
-
-                <input type="text" name="cod_pais" id="cod_pais" maxlength="2">
-        </br></br>
-
-        <label for="nome_pais">Nome</label>
-
-                <input type="text" name="nome_pais" id="nome_pais">
-        </br></br>
-
-        <label for="quant_pop">Quant. Populacional</label>
-
-                <input type="number" name="quant_pop" id="quant_pop">
-        </br></br>
-
-
-        <input type="submit" id="enviar" disabled>
-        
-    </form>
 </body>
 <script>
 

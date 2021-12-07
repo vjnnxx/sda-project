@@ -4,100 +4,128 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Equipamentos</title>
 </head>
 <body>
-    <a href="/"> Home</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
+        <img src="/img/logo.png" />           
+    </nav>
     <h1>Equipamentos</h1>
 
-    <h2>Filtros</h2>
+    
 
-    <label for="tipo">Tipo:</label>
+    <div class="container">
+        <h2>Filtros</h2>
 
-        <select name="tipo" id="tipo">
-                <option value="">Nenhum</option>
-                <option value="JATO">JATO</option>
-                <option value="HELICOPTERO">HELICOPTERO</option>
-                <option value="TURBO HELICE">TURBO HELICE</option>
-                
-                        
-                
-            </select>
-    </br></br>
+        
+        <div class="row">
 
-    <label for="nome">Nome:</label>
+            <div class="col-sm">
+                <label for="tipo">Tipo:</label>
+
+                <select name="tipo" id="tipo">
+                    <option value="">Nenhum</option>
+                    <option value="JATO">JATO</option>
+                    <option value="HELICOPTERO">HELICOPTERO</option>
+                    <option value="TURBO HELICE">TURBO HELICE</option>         
+                </select>
+            </div>
+
+            <div class="col-sm">
+                <label for="nome">Nome:</label>
             
-            <select name="nome" id="nome">
-                <option value="">Nenhum</option>
-                <% for(var i=0;i< equipamentos.length;i++){ %>
-                    <option value="<%= equipamentos[i].NM_EQPT %>"><%= equipamentos[i].NM_EQPT %></option>
-                <% } %>
+                <select name="nome" id="nome">
+                    <option value="">Nenhum</option>
+                    <% for(var i=0;i< equipamentos.length;i++){ %>
+                        <option value="<%= equipamentos[i].NM_EQPT %>"><%= equipamentos[i].NM_EQPT %></option>
+                    <% } %>
 
-            </select>
-    </br></br>
+                </select>
+            </div>
 
-    <label for="quant">Quant. passageiro:</label>
+            <div class="col-sm">
+                <label for="quant">Quant. passageiro:</label>
             
-            <select name="quant" id="quant">
-                <option value="">Nenhum</option>
-                <% for(var i=0;i< equipamentos.length;i++){ %>
-                    <option value="<%= equipamentos[i].QT_PSGR %>"><%= equipamentos[i].QT_PSGR %></option>
-                <% } %>
-
-            </select>
-    </br></br>
-
+                <select name="quant" id="quant">
+                    <option value="">Nenhum</option>
+                    <% for(var i=0;i< equipamentos.length;i++){ %>
+                        <option value="<%= equipamentos[i].QT_PSGR %>"><%= equipamentos[i].QT_PSGR %></option>
+                    <% } %>
     
-    <input type="text" name="busca" id="busca" required>
+                </select>
 
-    <button type="submit" id="send-busca"> Enviar</button>
-    
-    <a href="/equipamentos">
-        <button> Limpar </button>
-    </a> <br>
+            </div>
 
-    
-    
-
-    <a href="/equipamentos/cadastro">
-        <button> Cadastrar</button>
-    </a>
-    
-    <div id="resultados">
-        <table id="table-equipamentos">
-        
-                <tr>
-                    <td>CD_EQPT</td>
-                    <td>NM_EQPT</td>
-                    <td>DC_TIPO_EQPT</td>
-                    <td>QT_MOTOR</td>
-                    <td>IC_TIPO_PRPS</td>
-                    <td>QT_PSGR</td>
-                </tr>
-
-
-            
-                <% for(var i=0;i< equipamentos.length;i++){ %>
-                    <tr class="resultado-equipamentos">
-                        <td><%= equipamentos[i].CD_EQPT %></td>
-                        <td><%= equipamentos[i].NM_EQPT %></td>
-                        <td><%= equipamentos[i].DC_TIPO_EQPT %></td>
-                        <td><%= equipamentos[i].QT_MOTOR %></td>
-                        <td><%= equipamentos[i].IC_TIPO_PRPS %></td>
-                        <td><%= equipamentos[i].QT_PSGR %></td>
-                        
-                        <td> 
-                            <a href="/equipamentos/editar/<%=equipamentos[i].CD_EQPT %>">
-                                <button type="button"> Editar</button></td>
-                            </a>
-                            
-                    </tr>
-                <% } %>
-        
-        
-        
-        </table>
+        </div>
     </div>
+
+        
+        
+        <div class="container">
+            <h3>Buscar</h3>
+            <input type="text" name="busca" id="busca" required>
+
+            <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
+                    
+            <a href="/equipamentos">
+                <button class="btn btn-secondary"> Limpar </button>
+            </a> 
+
+            <a href="/equipamentos/cadastro">
+                <button class="btn btn-info"> Cadastrar</button>
+            </a> 
+
+            <div id="resultados" style="margin-top: 10px;">
+                <table id="table-equipamentos" class="table table-sm">
+
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>CD_EQPT</th>
+                                <th>NM_EQPT</th>
+                                <th>DC_TIPO_EQPT</th>
+                                <th>QT_MOTOR</th>
+                                <th>IC_TIPO_PRPS</th>
+                                <th>QT_PSGR</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        
+        
+        
+                    
+                        <% for(var i=0;i< equipamentos.length;i++){ %>
+                            <tr class="resultado-equipamentos">
+                                <td><%= equipamentos[i].CD_EQPT %></td>
+                                <td><%= equipamentos[i].NM_EQPT %></td>
+                                <td><%= equipamentos[i].DC_TIPO_EQPT %></td>
+                                <td><%= equipamentos[i].QT_MOTOR %></td>
+                                <td><%= equipamentos[i].IC_TIPO_PRPS %></td>
+                                <td><%= equipamentos[i].QT_PSGR %></td>
+                                
+                                <td> 
+                                    <a href="/equipamentos/editar/<%=equipamentos[i].CD_EQPT %>">
+                                        <button type="button" class="btn btn-info"> Editar</button></td>
+                                    </a>
+                                    
+                            </tr>
+                        <% } %>
+                
+                
+                
+                </table>
+            </div>
+        </div>
+    
+
+    
+    
+
+    
+    
+    
 
 </body>
 <script>
