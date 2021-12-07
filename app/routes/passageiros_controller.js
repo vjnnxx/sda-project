@@ -275,4 +275,37 @@ module.exports=function(app){
         });
 
     });
+
+    app.get('/passageiros/filtro', function (req, res){
+
+        
+    
+
+        const solteiro = req.query.solteiro == null ? '' : req.query.solteiro;
+        
+
+        const busca = req.query.busca == null ? '' : req.query.busca;
+
+    
+       
+        let sql = `SELECT * FROM itr_psgr WHERE IC_ESTD_CIVIL LIKE '%` + solteiro +  `%' AND  NM_PSGR LIKE '%` + busca + `%' ;`;
+        
+        
+        
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            //res.render('lista/passageiros', {passageiros: resultados});
+           
+            res.send(resultados);
+
+        });
+
+    });
 };
