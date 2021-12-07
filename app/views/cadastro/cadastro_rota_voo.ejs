@@ -3,48 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Rota de voo - Cadastro</title>
 </head>
 <body>
-    <h1>Cadastro Rota de voo</h1>
 
-    <form action="/rotas/cadastrar" method="post">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         
-        <label>Código Aeroporto Origem</label>
+        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
+        <img src="/img/logo.png" />           
+    </nav>
+    
+    <div class="container">
+        <h1>Cadastro Rota de voo</h1>
+        <form action="/rotas/cadastrar" method="post">
+            <div class="form-group">
+                <label>Código Aeroporto Origem</label>
 
-        <select name="cod_origem" id="cod_origem">
-            <% for(var i=0;i< aeroportos.length;i++){ %>
-                <option value="<%= aeroportos[i].CD_ARPT %>"><%= aeroportos[i].CD_ARPT %></option>
-            <% } %>
+                <select name="cod_origem" id="cod_origem" class="form-control form-control-md">
+                    <% for(var i=0;i< aeroportos.length;i++){ %>
+                        <option value="<%= aeroportos[i].CD_ARPT %>"><%= aeroportos[i].CD_ARPT %></option>
+                    <% } %>
 
-        </select>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Código Aeroporto Destino</label>
+
+                <select name="cod_dest" id="cod_dest" class="form-control form-control-md">
+                    <% for(var i=0;i< aeroportos.length;i++){ %>
+                        <option value="<%= aeroportos[i].CD_ARPT %>"><%= aeroportos[i].CD_ARPT %></option>
+                    <% } %>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Valor passagem</label>
+                <input type="number" id="val_passagem" name="val_passagem" class="form-control form-control-md" value=""/>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-success">
+            </div>
+
+        </form>
+    </div>
+    
+        
+        
 
     
-    </br></br>
-
-    <label>Código Aeroporto Destino</label>
-
-    <select name="cod_dest" id="cod_dest">
-        <% for(var i=0;i< aeroportos.length;i++){ %>
-            <option value="<%= aeroportos[i].CD_ARPT %>"><%= aeroportos[i].CD_ARPT %></option>
-        <% } %>
-
-    </select>
-
-
-    </br></br>
-
-
-        <label>Valor passagem</label>
-		<input type="number" id="val_passagem" name="val_passagem" value=""/>
-    </br></br>
 
 
 
 
        
 
-    <input type="submit" >
-    </form>
+    
+    
 </body>
 </html>

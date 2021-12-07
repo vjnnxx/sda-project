@@ -18,15 +18,17 @@
     <h1>Unidades Federais</h1>
 
     <div class="container">
+        
+
         <div  class="row">
             <div  class="col-sm">
                 <input type="text" name="busca" id="busca" required>
         
-                <button class="btn btn-secondary" type="submit" id="send-busca"> Enviar</button>
+                <button class="btn btn-primary" type="submit" id="send-busca"> Enviar</button>
 
                 <a href="/uf">
                     <button class="btn btn-secondary"> Limpar </button>
-                </a> <br>
+                </a>
             
                 
                 <a href="/uf/cadastro">
@@ -37,14 +39,15 @@
 
     </div>
     
+<br>
 
-
-    <div id="resultados" class="container" style="width: 80%;">
+    <div id="resultados" class="container" style="width: 70%;">
         <table id="table-unidades" class="table table-sm">
             <thead class="thead-dark">
                 <tr>
-                    <td>Sigla UF</td>
-                    <td>Nome UF</td>
+                    <th>Sigla UF</th>
+                    <th>Nome UF</th>
+                    <th>Editar</th>
                     
                 </tr>
             </thead>
@@ -108,6 +111,7 @@
 
                            var button = document.createElement('button');
                            button.innerHTML = 'Editar';
+                           button.className = 'btn btn-info';
 
                            a.appendChild(button);
 
