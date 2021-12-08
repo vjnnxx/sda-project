@@ -203,7 +203,7 @@ module.exports=function(app){
             });
         }
 
-        res.redirect('/');
+        res.redirect('/passageiros');
 
     });
 

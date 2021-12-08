@@ -15,7 +15,7 @@
 
     <div class="container">
         <h1 class="h1">Atualizar Passageiro</h1>
-        <form action="atualizar/<%= passageiro[0].CD_PSGR %>" method="post"></form>
+        <form action="atualizar/<%= passageiro[0].CD_PSGR %>" method="post">
         <div class="form-group">
             <labe for="nome">Nome</label>
 		    <input type="text" id="nome" name="nome" class="form-control form-control-md" value="<%= passageiro[0].NM_PSGR %>"/>
@@ -112,7 +112,7 @@
        //Botão de deletar
 
        $('#deletar').click(function(){
-            let check = confirm('Quer deletar amigao?');
+            let check = confirm('Quer deletar?');
             
             if(check){
                 $.ajax({
