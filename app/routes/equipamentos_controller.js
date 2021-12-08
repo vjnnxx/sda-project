@@ -157,7 +157,7 @@ module.exports=function(app){
         } else {
             sql = `SELECT * FROM itr_eqpt WHERE NM_EQPT LIKE '%` + nome +  `%' AND  DC_TIPO_EQPT LIKE '%` + tipo + `%'  AND QT_PSGR =` + quant + ` AND CD_EQPT LIKE '%` + busca + `%';`;  
         }
-        console.log(sql)
+        
         var resultados = [];
 
         con.query(sql, (err, result)=>{

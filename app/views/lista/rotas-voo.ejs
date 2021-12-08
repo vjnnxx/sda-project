@@ -8,25 +8,18 @@
     <title>Rotas de voo</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary" style="display: flex;">
         
-        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
-        <img src="/img/logo.png" />           
+        <a class="navbar-brand" href="/"><h2> SDA </h2></a>   
+        <img src="/img/logo.png" />    
+        <h2 style="margin-left: auto;">Rotas de voo</h2>       
     </nav>
     
+    <br>
     
-    <h1>Rotas de voo</h1>
 
     <div class="container">
         <div class="row">
-
-            <div class="col-sm">
-                <h2>Filtros</h2>
-                <input type="radio" id="com_reservas" name="reservas" value="1">
-                <label for="com_reservas">Somente com reservas</label><br>
-                <input type="radio" id="sem_reservas" name="reservas"  value="0">
-                <label for="sem_reservas">Sem reservas</label>
-            </div>
 
             <div class="col-sm">
                 <h3>Buscar</h3>
@@ -50,7 +43,7 @@
 
 
 
-    <div id="resultados" class="container">
+    <div id="resultados" class="container" style="margin-top: 10px;">
         <table id="table-rotas" class="table table-sm">
                 
                 <thead class="thead-dark">
@@ -162,125 +155,7 @@
             }
         });
 
-
-        $('#com_reservas').click(function(){
-            $.ajax({
-                url: '/rotas/filtro',
-                method: 'GET',
-                data: {temReserva: this.value},
-                success: response => {
-                    const rotas = response;
-                      
-                        $('tr').remove(".resultado-rotas");
-
-                        const table = document.getElementById('table-rotas');
-
-                        rotas.forEach(element => {
-
-                            let tr = document.createElement('tr');
-                            tr.className = "resultado-rotas";
-
-                            var td1 = document.createElement('td');
-                            td1.innerHTML  = element.NR_ROTA_VOO;
-
-                            var td2 = document.createElement('td');
-                            td2.innerHTML = element.CD_ARPT_ORIG;
-
-                            var td3 = document.createElement('td');
-                            td3.innerHTML = element.CD_ARPT_DEST;
-
-                            var td4 = document.createElement('td');
-                            element.VR_PASG == undefined ? td4.innerHTML = '' : td4.innerHTML = element.VR_PASG ;
-
-
-                            var td8 = document.createElement('td');
-                            
-                            var a = document.createElement('a');
-                            a.href = '/rotas/editar/' + element.NR_VOO;
-
-                            var button = document.createElement('button');
-                            button.innerHTML = 'Editar';
-
-                            a.appendChild(button);
-
-                            td8.appendChild(a);
-
-
-                            tr.appendChild(td1);
-                            tr.appendChild(td2);
-                            tr.appendChild(td3);
-                            tr.appendChild(td4);
-
-                            tr.appendChild(td8);
-
-                            table.appendChild(tr);
-
-                        });
-                },
-            });
-        });
-
-        $('#sem_reservas').click(function(){
-            $.ajax({
-                url: '/rotas/filtro',
-                method: 'GET',
-                data: {temReserva: this.value},
-                success: response => {
-                    const rotas = response;
-                      
-                        $('tr').remove(".resultado-rotas");
-
-                        const table = document.getElementById('table-rotas');
-
-                        rotas.forEach(element => {
-
-                            let tr = document.createElement('tr');
-                            tr.className = "resultado-rotas";
-
-                            var td1 = document.createElement('td');
-                            td1.innerHTML  = element.NR_ROTA_VOO;
-
-                            var td2 = document.createElement('td');
-                            td2.innerHTML = element.CD_ARPT_ORIG;
-
-                            var td3 = document.createElement('td');
-                            td3.innerHTML = element.CD_ARPT_DEST;
-
-                            var td4 = document.createElement('td');
-                            element.VR_PASG == undefined ? td4.innerHTML = '' : td4.innerHTML = element.VR_PASG ;
-
-
-                            var td8 = document.createElement('td');
-                            
-                            var a = document.createElement('a');
-                            a.href = '/rotas/editar/' + element.NR_VOO;
-
-                            var button = document.createElement('button');
-                            button.innerHTML = 'Editar';
-
-                            a.appendChild(button);
-
-                            td8.appendChild(a);
-
-
-                            tr.appendChild(td1);
-                            tr.appendChild(td2);
-                            tr.appendChild(td3);
-                            tr.appendChild(td4);
-
-                            tr.appendChild(td8);
-
-                            table.appendChild(tr);
-
-                        });
-                },
-            });
-        });
-        
-        
-
- 
-        
+      
 
       
         

@@ -182,5 +182,26 @@ module.exports=function(app){
         });
 
     });
+    app.get('/reservas/filtro', function (req,res){
+        let maior = req.query.maior;
+
+        sql = 'SELECT * FROM itr_resv WHERE NR_VOO > ' + maior + ' ORDER BY NR_VOO ASC;';
+
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            //res.render('lista/passageiros', {passageiros: resultados});
+           
+            res.send(resultados);
+
+        });
+
+    })
 
 }

@@ -8,12 +8,14 @@
     <title>Voos</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-primary">
-        <a class="navbar-brand" href="/"><h1> SDA </h1></a>      
+    <nav class="navbar navbar-expand-md navbar-light bg-primary" style="display: flex;">
+        <a class="navbar-brand" href="/"><h2> SDA </h2></a>      
         <img src="/img/logo.png" />  
-    </nav>
-    <h1>Voos</h1>
 
+        <h2 style="margin-left: auto;">Voos</h2>
+    </nav>
+    
+<br>
     
     
     <div class="container">
@@ -21,10 +23,13 @@
         <div class="row">
             <div class="col-sm">
                 <label>Local de origem </label>
-                <input type="text" id="local_orig" name="local_orig" value=""/> 
-                <a href="">
-                <button class="btn btn-info">Filtrar</button>
-                </a>
+                <select name="local_orig" id="local_orig">
+                    <option value="">Nenhum</option>
+                    <% for(var i=0;i< aeroportos.length;i++){ %>
+                        <option value="<%= aeroportos[i].CD_ARPT %>"><%= aeroportos[i].CD_ARPT %></option>
+                    <% } %>
+            
+                </select>
 
             </div>
 
@@ -159,6 +164,67 @@
                     },
                 });
             }
+        });
+
+        $('#local_orig').change(function(){
+
+            const origem = $('#local_orig').val();
+
+
+            $.ajax({
+                url: '/voos/filtro',
+                method: 'GET',
+                data: { origem: origem },
+                success: response =>{
+                    const voos = response;
+                             
+                        $('tr').remove(".resultado-voos");
+
+                        const table = document.getElementById('table-voos');
+
+                        voos.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-voos";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.NR_VOO;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.DT_SAIDA_VOO;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.NR_ROTA_VOO;
+
+                            var td4 = document.createElement('td');
+                            td4.innerHTML = element.CD_ARNV ;
+
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/voos/editar/' + element.NR_VOO;
+
+                            var button = document.createElement('button');
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                },
+            });
         });
 
     

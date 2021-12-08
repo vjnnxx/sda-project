@@ -280,8 +280,6 @@ module.exports=function(app){
     app.get('/passageiros/filtro', function (req, res){
 
         
-        console.log(req.query)
-        
 
         const status = req.query.status == null ? '' : req.query.status;
         

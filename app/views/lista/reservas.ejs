@@ -8,14 +8,16 @@
     <title>Reservas</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary" style="display: flex;">
         
-        <a class="navbar-brand" href="/"><h1> SDA </h1></a>   
-        <img src="/img/logo.png" />           
+        <a class="navbar-brand" href="/"><h2> SDA </h2></a>   
+        <img src="/img/logo.png" />  
+        
+        <h2 style="margin-left: auto;">Reservas</h2>
     </nav>
     
-    <h1>Reservas</h1>
-
+    
+<br>
 
     <div class="container">
         <div class="row">
@@ -25,9 +27,9 @@
                 <h3 class="h3">Código do voo</h3>
 
                 <label>Maior que:</label>
-                <input type="number" id="maior_cod" name="cod_voo" /><br>
-                <label>Menor que:</label>
-                <input type="number" id="menor_cod" name="cod_voo" value=""/><br><br>
+                <input type="number" id="maior_cod" name="cod_voo" />
+                
+                <button id="filtrar" class="btn btn-info"> Filtrar </button>
             </div>
 
             <div class="col-sm">
@@ -52,7 +54,7 @@
 
     </div>
     
-    <div id="resultados" class="container" style="width: 80%;">
+    <div id="resultados" class="container" style="width: 80%; margin-top: 10px;">
         <table id="table-reservas" class="table table-sm">
 
 
@@ -137,6 +139,7 @@
                             a.href = '/reservas/editar/' + element.CD_PSGR;
 
                             var button = document.createElement('button');
+                            button.className = 'btn btn-info';
                             button.innerHTML = 'Editar';
 
                             a.appendChild(button);
@@ -162,9 +165,71 @@
             }
         });
 
-        
+
+        $('#filtrar').click(function(){
+            
+            const maior = $('#maior_cod').val();
+
+            $.ajax({
+                url: '/reservas/filtro',
+                method: 'GET',
+                data: {maior: maior},
+                success: response =>{
+                        //console.log(response);
+
+                        const passageiros = response;
+                        Vasco = passageiros;     
+                        $('tr').remove(".resultado-reservas");
+
+                        const table = document.getElementById('table-reservas');
+
+                        passageiros.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-reservas";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.CD_PSGR;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.NR_VOO;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.DT_SAIDA_VOO;
+
+                            var td4 = document.createElement('td');
+                            element.PC_DESC_PASG == undefined ? td4.innerHTML = '' : td4.innerHTML = element.PC_DESC_PASG ;
 
 
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/reservas/editar/' + element.CD_PSGR;
+
+                            var button = document.createElement('button');
+                            button.className = 'btn btn-info';
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+                            
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        });
+                        
+                    },
+
+            });
+        });
       
         
     });

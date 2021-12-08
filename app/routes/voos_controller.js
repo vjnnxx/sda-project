@@ -12,7 +12,7 @@ module.exports=function(app){
     // Voos
     app.get('/voos', function (req, res){
         let sql = 'SELECT * FROM itr_voo;'; //pega todos os voos
-    
+        let sql2 = 'SELECT * FROM itr_arpt;'
         
         let resultados = [];
         con.query(sql, (err, result)=>{
@@ -24,7 +24,19 @@ module.exports=function(app){
 
             
             
-            res.render('lista/voos', {voos: resultados});
+            
+        })
+        let resultados2 = [];
+        con.query(sql2, (err, result)=>{
+            if (err) throw err;
+
+            for (x in result){
+                resultados2.push(result[x]);
+            }
+
+            
+            
+            res.render('lista/voos', {voos: resultados,aeroportos:resultados2});
         })
         
 
@@ -189,4 +201,29 @@ module.exports=function(app){
         
 
     });
+
+
+    app.get('/voos/filtro', function(req, res){
+
+        const origem = req.query.origem;
+        
+        let sql = "SELECT * FROM itr_voo INNER JOIN itr_rota_voo ON itr_rota_voo.NR_ROTA_VOO = itr_voo.NR_ROTA_VOO WHERE itr_rota_voo.CD_ARPT_ORIG = "+ mysql.escape(origem) + ";";
+
+        var resultados = [];
+
+        con.query(sql, (err, result)=>{
+        if (err) throw err;
+        
+        
+        for (x in result){
+            resultados.push(result[x]);
+        }
+            
+           
+            res.send(resultados);
+
+        });
+        
+    });
+    
 }
