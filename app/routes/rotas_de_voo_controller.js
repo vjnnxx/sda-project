@@ -131,7 +131,7 @@ module.exports=function(app){
 
         //console.log(req.query)
         
-        sql = `SELECT * FROM itr_rota_voo WHERE NR_ROTA_VOO = ` + busca + ` ;` ;
+        sql = `SELECT * FROM itr_rota_voo WHERE NR_ROTA_VOO = ` + mysql.escape(busca) + ` ;` ;
 
         var resultados = [];
 

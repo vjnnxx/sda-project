@@ -33,25 +33,21 @@
             <h3>Idade</h3>
 
             <label>Maior que: </label>
-            <input type="number" id="maior_idade" name="idade" value=""/><br>
-            <label>Menor que:</label>
-            <input type="number" id="menor_idade" name="idade" value=""/><br><br>
+            <input type="number" id="maior_idade" name="idade" value=""/>
           </div>
           <div class="col-sm">
               <h3> Buscar </h3>
-            <input type="text" name="busca" id="busca" required>
+            <input type="text" name="busca" id="busca" placeholder="nome do passageiro" required>
         
-        <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
+            <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
 
-        <a href="/passageiros">
-            <button class="btn btn-secondary"> Limpar </button>
-        </a>
-        
-
-
-        <a href="/passageiros/cadastro">
-            <button class="btn btn-info"> Cadastrar</button>
-        </a>
+            <a href="/passageiros">
+                <button class="btn btn-secondary"> Limpar </button>
+            </a>
+            
+            <a href="/passageiros/cadastro">
+                <button class="btn btn-info"> Cadastrar</button>
+            </a>
           </div>
         </div>
       </div>
@@ -105,7 +101,6 @@
 <script>
     $(document).ready(function(){
 
-        
         
         $('#send-busca').click(function(){
            
@@ -189,9 +184,11 @@
 
         $('#solteiro').change(function(){
             
-            const casado = $('#casado').val();
+            let casadoCheck = document.getElementById('casado');
 
-            const solteiro = $('#solteiro').val();
+            if(casadoCheck.checked){
+                casadoCheck.checked = false;
+            }
             
             const busca = $('#busca').val();
 
@@ -200,8 +197,7 @@
                 method: 'GET',
                 data: {
                     busca: busca,
-                    solteiro: solteiro,
-                    casado:casado
+                    status: 'S',
                 },
                 success: response =>{
                         //console.log(response);
@@ -272,10 +268,13 @@
             });
         })
         $('#casado').change(function(){
-            
-            const casado = $('#casado').val();
 
-            const solteiro = $('#solteiro').val();
+            let solteiroCheck = document.getElementById('solteiro');
+            
+
+            if(solteiroCheck.checked){
+                solteiroCheck.checked = false;
+            }
             
             const busca = $('#busca').val();
 
@@ -284,8 +283,7 @@
                 method: 'GET',
                 data: {
                     busca: busca,
-                    solteiro: solteiro,
-                    casado:casado
+                    status: 'C',
                 },
                 success: response =>{
                         //console.log(response);
@@ -328,6 +326,7 @@
                             a.href = '/passageiros/editar/' + element.CD_PSGR;
 
                             var button = document.createElement('button');
+                            button.className = 'btn btn-info';
                             button.innerHTML = 'Editar';
 
                             a.appendChild(button);
@@ -357,8 +356,114 @@
 
 
 
+        $('#maior_idade').blur(function(){
+            
+            const busca = $('#busca').val();
+
+            let solteiroCheck = document.getElementById('solteiro');
+
+            let casadoCheck = document.getElementById('casado');
+            
+            var status;
+
+            if(solteiroCheck.checked){
+                status ='S';
+            }else if(casadoCheck.checked){
+                status ='C';
+            } else{
+                status = null;
+            }
             
 
+            const anoParam = $('#maior_idade').val();
+
+            var calcIdade;
+            const d = new Date();
+            var anoAtual = d.getFullYear();
+
+            if(anoParam != ''){
+                calcIdade = anoAtual - anoParam;
+                $.ajax({
+                url: '/passageiros/filtro/',
+                method: 'GET',
+                data: {
+                    busca: busca,
+                    status: status,
+                    idade: calcIdade,
+                },
+                success: response =>{
+                        //console.log(response);
+
+                        const passageiros = response;
+                           
+                        $('tr').remove(".resultado-passageiros");
+
+                        const table = document.getElementById('table-passageiros');
+
+                        passageiros.forEach(element => {
+
+                            let tr = document.createElement('tr');
+                            tr.className = "resultado-passageiros";
+
+                            var td1 = document.createElement('td');
+                            td1.innerHTML  = element.CD_PSGR;
+
+                            var td2 = document.createElement('td');
+                            td2.innerHTML = element.NM_PSGR;
+
+                            var td3 = document.createElement('td');
+                            td3.innerHTML = element.IC_SEXO_PSGR;
+
+                            var td4 = document.createElement('td');
+                            td4.innerHTML = element.DT_NASC_PSGR ;
+
+                            var td5 = document.createElement('td');
+                            td5.innerHTML = element.IC_ESTD_CIVIL ;
+
+                            var td6 = document.createElement('td');
+                            element.IC_CD_PSGR_RESP == undefined ? td6.innerHTML = '' : td6.innerHTML = element.IC_CD_PSGR_RESP ;
+
+                            var td7 = document.createElement('td');
+                            td7.innerHTML = element.CD_PAIS ;
+
+                            var td8 = document.createElement('td');
+                            
+                            var a = document.createElement('a');
+                            a.href = '/passageiros/editar/' + element.CD_PSGR;
+
+                            var button = document.createElement('button');
+                            button.className = 'btn btn-info';
+                            button.innerHTML = 'Editar';
+
+                            a.appendChild(button);
+
+                            td8.appendChild(a);
+
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+                            tr.appendChild(td5);
+                            tr.appendChild(td6);
+                            tr.appendChild(td7);
+                            tr.appendChild(td8);
+
+                            table.appendChild(tr);
+
+                        }); 
+                        
+                    },
+                });
+            }
+
+            
+
+            
+            
+            
+
+        });
             
 
         

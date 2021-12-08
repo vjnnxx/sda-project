@@ -1,4 +1,5 @@
 
+const { Result } = require('express-validator');
 const mysql = require('mysql');
 
 const con = mysql.createConnection({
@@ -279,23 +280,52 @@ module.exports=function(app){
     app.get('/passageiros/filtro', function (req, res){
 
         
-    
+        console.log(req.query)
+        
 
-        const solteiro = req.query.solteiro == null ? '' : req.query.solteiro;
+        const status = req.query.status == null ? '' : req.query.status;
         
 
         const busca = req.query.busca == null ? '' : req.query.busca;
 
+        let sql2 = 'SELECT DT_NASC_PSGR, CD_PSGR FROM itr_psgr;';
+
+
+        var anos = []
+        var aux = []
+        con.query(sql2, (err,result)=>{
+            if (err) throw err;
+
+            for(x in result){
+
+                if(result[x].DT_NASC_PSGR != null){
+                    aux = result[x].DT_NASC_PSGR.split("/");
+
+                    anos.push({'ano': aux[0], 'codigo': result[x].CD_PSGR});
+                    
+            
+                }
+
+                
+            }
+
+            
+            
+            
+        }); 
+
+
+
     
        
-        let sql = `SELECT * FROM itr_psgr WHERE IC_ESTD_CIVIL LIKE '%` + solteiro +  `%' AND  NM_PSGR LIKE '%` + busca + `%' ;`;
-        
+        let sql = `SELECT * FROM itr_psgr WHERE IC_ESTD_CIVIL LIKE '%` + status +  `%' AND  NM_PSGR LIKE '%` + busca + `%' ;`;
+
         
         
         var resultados = [];
 
         con.query(sql, (err, result)=>{
-        if (err) throw err;
+        
         
         
         for (x in result){

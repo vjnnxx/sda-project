@@ -30,7 +30,7 @@
 
             <div class="col-sm">
                 <h3>Buscar</h3>
-                <input type="text" name="busca" id="busca" required>
+                <input type="text" name="busca" id="busca" placeholder="Número da Rota de Voo" required>
         
                 <button type="submit" id="send-busca" class="btn btn-primary"> Enviar</button>
                 <a href="/rotas">
@@ -55,10 +55,10 @@
                 
                 <thead class="thead-dark">
                     <tr>    
-                        <th>NR_ROTA_VOO</th>
-                        <th>CD_ARPT_ORIG</th>
-                        <th>CD_ARPT_DEST</th>
-                        <th>VR_PASG</th>
+                        <th>Número</th>
+                        <th>Cod. Aeroporto Origem</th>
+                        <th>Cod. Aeroporto Destino</th>
+                        <th>Valor Passagem</th>
                         
                         <th>Editar</th>
                     </tr>
@@ -136,6 +136,7 @@
                             a.href = '/rotas/editar/' + element.NR_VOO;
 
                             var button = document.createElement('button');
+                            button.className = 'btn btn-info';
                             button.innerHTML = 'Editar';
 
                             a.appendChild(button);
